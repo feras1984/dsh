@@ -1,0 +1,1 @@
+var I=(S=>(S.MAIN_SECTION="Main Section",S.STORE_SECTION="Store Section",S.SERVICES="Services",S.CLIENTS="Clients",S.GALLERY="Gallery",S.ABOUT="About Us",S.MISSION="Our Mission",S.CONTACT_US="Contact Us",S.NEWS="News",S.ARTICLES="Articles",S.INDUSTRIES="Industries",S))(I||{});export{I as B};

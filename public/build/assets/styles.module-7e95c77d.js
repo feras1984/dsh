@@ -1,0 +1,1 @@
+const t="_imgStyle_13651_1",e="_shadowBox_13651_10",o="_shadowImgStyle_13651_22",s="_serviceCard_13651_29",i="_boxContainer_13651_34",_="_imgAria_13651_40",a="_titleAria_13651_55",n="_enableList_13651_62",r={imgStyle:t,shadowBox:e,shadowImgStyle:o,serviceCard:s,boxContainer:i,imgAria:_,titleAria:a,enableList:n};export{r as s};

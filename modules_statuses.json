@@ -1,0 +1,15 @@
+{
+    "User": true,
+    "Cateogry": true,
+    "Category": true,
+    "Product": true,
+    "Order": true,
+    "Payment": true,
+    "Marketing": true,
+    "Notification": true,
+    "Shipment": true,
+    "Billing": true,
+    "Setting": true,
+    "File": true,
+    "Website": true
+}

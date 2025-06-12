@@ -1,0 +1,1 @@
+const i="_imgStyle_1ci3p_1",t="_shadowBox_1ci3p_10",e="_shadowImgStyle_1ci3p_22",o="_serviceCard_1ci3p_29",s="_boxContainer_1ci3p_34",_="_imgAria_1ci3p_40",a="_titleAria_1ci3p_56",c="_enableList_1ci3p_63",n={imgStyle:i,shadowBox:t,shadowImgStyle:e,serviceCard:o,boxContainer:s,imgAria:_,titleAria:a,enableList:c};export{n as s};
