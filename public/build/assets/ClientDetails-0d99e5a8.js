@@ -1,1 +1,0 @@
-import{j as t}from"./app-9bb4e45d.js";import{B as e}from"./Box-6e0f226b.js";import"./generateUtilityClasses-e41a8b5c.js";const l=({client:i})=>t.jsx(e,{children:"Client Details"});export{l as default};

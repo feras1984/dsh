@@ -1,1 +1,0 @@
-import{j as t}from"./app-9bb4e45d.js";import{B as o}from"./Box-6e0f226b.js";import"./generateUtilityClasses-e41a8b5c.js";const i=({about:s})=>t.jsx(o,{children:"About Us Details"});export{i as default};
