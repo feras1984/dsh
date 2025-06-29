@@ -46,18 +46,18 @@ const MissionAdd: React.FC<{category: string}> = ({category}) => {
         resolver: zodResolver(blockSchema),
         defaultValues: {
             isActive: true,
-            image: (null as (File | null)),
+            // image: (null as (File | null)),
             translations: formService.generateDefaultValues(languages),
         }
     });
 
     const onSubmit =  () => {
         // console.log(methods.getValues('image'));
-        if (methods.getValues('image') === null) return;
+        // if (methods.getValues('image') === null) return;
         const formData = new FormData();
         formData.append('category', category);
         formData.append('parentId', '-1');
-        formData.append('image', (methods.getValues('image') as Blob));
+        // formData.append('image', (methods.getValues('image') as Blob));
         formData.append('isActive', String(methods.getValues('isActive')));
         formData.append('translations', JSON.stringify(methods.getValues('translations')));
         formData.append('isImage', 'true');
@@ -75,9 +75,9 @@ const MissionAdd: React.FC<{category: string}> = ({category}) => {
         })
     }
 
-    React.useEffect(() => {
-        methods.getValues('image');
-    }, [methods]);
+    // React.useEffect(() => {
+    //     methods.getValues('image');
+    // }, [methods]);
     return (
         <Box>
             <Breadcrumbs>
@@ -98,10 +98,10 @@ const MissionAdd: React.FC<{category: string}> = ({category}) => {
                     autoComplete="off"
                     onSubmit={methods.handleSubmit(onSubmit)}
                 >
-                    <ValidatedImage
-                        controllerName="image"
-                        methods={methods}
-                    />
+                    {/*<ValidatedImage*/}
+                    {/*    controllerName="image"*/}
+                    {/*    methods={methods}*/}
+                    {/*/>*/}
 
                     <ValidatedCheckbox
                         name="isActive"

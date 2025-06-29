@@ -21,7 +21,7 @@ class BlockService
         $this->imageContainer = 'block';
         $this->reference = 'Modules\Website\Entities\Block';
     }
-    public function mapBlockModel(Block $block)
+    public function mapBlockModel(Block $block): array
     {
         $translations = $block->translations;
 
@@ -61,6 +61,7 @@ class BlockService
             'createdAt' => Carbon::make($block->created_at)->format('M d, Y'),
             'translations' => $translationsModel,
             'files' => $filesModel,
+            'classification' => $block->classification,
         ];
     }
 
@@ -97,11 +98,12 @@ class BlockService
             'startDate' => is_null($block->start_date) ? null : Carbon::make($block->start_date)->format('M d, Y'),
             'endDate' => is_null($block->end_date) ? null : Carbon::make($block->end_date)->format('M d, Y'),
             'children' => $childrenModel,
+            'classification' => $block->classification,
         ];
 
     }
 
-    public function mapBlockTranslationModel(BlockTranslation $translation)
+    public function mapBlockTranslationModel(BlockTranslation $translation): array
     {
         return [
             'id' => $translation->id,
@@ -116,7 +118,7 @@ class BlockService
         ];
     }
 
-    public function getBlocks()
+    public function getBlocks(): array
     {
         $blocksModel = [];
         $blocks = Block::query()->get();
@@ -138,7 +140,25 @@ class BlockService
         return $blocksModel;
     }
 
-    private function fillBlockForm(Block &$block) {
+    public function getActiveBlocksForAdmin($category): array
+    {
+        $blocks = Block::query()
+            ->where('category', $category)
+            ->where('is_active', 1)
+            ->orderBy('order', 'ASC')
+            ->orderBy('start_date', 'DESC')
+            ->get();
+
+        $blockModel = [];
+        foreach ($blocks as $block) {
+            $blockModel[] = $this->mapBlockModel($block);
+        }
+
+        return $blockModel;
+    }
+
+    private function fillBlockForm(Block &$block): void
+    {
         $data = request()->all();
 //        dd(json_decode($data['translations']));
         $block->fill([
@@ -148,6 +168,7 @@ class BlockService
 //            'name' => $data['name'],
 //            'description' => $data['description'],
             'is_active' => $data['isActive'] === 'true',
+            'classification' => isset($data['classification']) ?? null,
         ]);
 
 //        if (array_key_exists('image', $data)) {
@@ -174,7 +195,8 @@ class BlockService
         }
     }
 
-    public function storeTranslations($data, Block $block) {
+    public function storeTranslations($data, Block $block): void
+    {
         if (array_key_exists('translations', $data)) {
             $translations = json_decode($data['translations']);
             foreach ($translations as $key => $translation) {
@@ -192,7 +214,8 @@ class BlockService
         }
     }
 
-    public function storeFiles($data, Block $block) {
+    public function storeFiles($data, Block $block): void
+    {
         if (array_key_exists('files', $data)){
             foreach ($data['files'] as $key => $file) {
                 $f['url'] = $file;
@@ -201,7 +224,7 @@ class BlockService
         }
     }
 
-    public function storeBlock($data)
+    public function storeBlock($data): array
     {
         $block = new Block();
 //        $data = request()->all();
@@ -221,7 +244,7 @@ class BlockService
     }
 
 
-    public function updateBlock($id)
+    public function updateBlock($id): array
     {
         $block = Block::query()->where('id', $id)->first();
         $this->fillBlockForm($block);
@@ -254,7 +277,8 @@ class BlockService
         return $file;
     }
 
-    public function blockActivation($data, $block) {
+    public function blockActivation($data, $block): array
+    {
         if (array_key_exists('isActive', $data)) {
             $translations = $block->translations()->get();
             foreach ($translations as $translation) {
@@ -268,7 +292,8 @@ class BlockService
         return $this->mapBlockModel($block);
     }
 
-    public function update_general_info($id) {
+    public function update_general_info($id): array
+    {
         $data = request()->all();
         $block = Block::query()->where('id', $id)->first();
         $block->category_id = $data['categoryId'];
@@ -280,7 +305,8 @@ class BlockService
         return $this->mapBlockModel($block);
     }
 
-    public function update_description_info($id) {
+    public function update_description_info($id): array
+    {
         $data = request()->all();
         $block = Block::query()->where('id', $id)->first();
         $block->description = $data['description'];
@@ -301,7 +327,8 @@ class BlockService
         ]);
     }
 
-    public function updateTranslations(Array $data, Block $block) {
+    public function updateTranslations(Array $data, Block $block): array
+    {
         //Store Date if existed:
         if (array_key_exists('startDate', $data)) {
             $block['start_date'] = Carbon::make($data['startDate']);
@@ -335,7 +362,8 @@ class BlockService
         return $this->mapBlockModel($block);
     }
 
-    public function deleteBlock(Block $block) {
+    public function deleteBlock(Block $block): void
+    {
 //        $block = Block::query()->where('id', $id)->first();
         if(!is_null($block->image)) {
             FileService::deleteFile($block->image, 'block');
@@ -357,7 +385,8 @@ class BlockService
     }
 
     //Site Service:
-    public function getActiveBlocks($category) {
+    public function getActiveBlocks($category): array
+    {
 //        $blocks = $category->blocks()
 //            ->where('category', $category)
 //            ->where('is_active', 1)
@@ -377,6 +406,8 @@ class BlockService
 
         return $blockModel;
     }
+
+
 
     // We need $data['image'], $data['isCover'].
     public function saveImage(Array $data, Block $block): array
@@ -402,7 +433,8 @@ class BlockService
         return $this->mapBlockModel($block);
     }
 
-    public function reorderList(Array $data) {
+    public function reorderList(Array $data): void
+    {
 
         $list = json_decode($data['list']);
         foreach ($list as $item) {

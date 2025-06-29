@@ -18,6 +18,7 @@ export class Block {
     createdAt: string;
     translations: BlockTranslation [];
     files: File [];
+    classification: string;
 
     constructor({
                     id = -1,
@@ -36,6 +37,7 @@ export class Block {
                     createdAt = '',
                     translations = [],
                     files = [],
+                    classification = '',
                 }) {
         this.id = id;
         this.categoryId = categoryId;
@@ -53,6 +55,7 @@ export class Block {
         this.createdAt = createdAt;
         this.translations = [...translations];
         this.files = [...files];
+        this.classification = classification;
     }
 
     public static columns = [

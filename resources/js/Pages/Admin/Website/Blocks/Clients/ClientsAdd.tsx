@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {PageProps} from "@/types";
 import {Container} from "typedi";
 import FormService from "@/Services/FormService/FormService";
@@ -15,12 +15,26 @@ import ValidatedCheckbox from "@/Components/ValidatedComponents/ValidatedCheckbo
 import BasicTranslation from "@/Components/Translations/BasicTranslation";
 import CustomButton from "@/Components/Button/CustomButton";
 import CustomSnackbar from "@/Components/Snackbar/CustomSnackbar";
+import BlockCategories from "@/Enums/BlockCategories";
+import {Block} from "@/models/block/Block";
+import ValidatedSelect from "@/Components/ValidatedComponents/ValidatedSelect";
 
 const ClientsAdd: React.FC<{category: string}> = ({category}) => {
     const formService = Container.get(FormService);
     const blockService = Container.get(BlockService);
     const commonService = Container.get(CommonService);
     const languages = usePage().props.settings.languages;
+    const [industries, setIndustries] = React.useState<Block []>([]);
+
+    //==========================================================================================
+    // Get the industries:
+    useEffect(() => {
+        blockService
+            .getActiveBlocks(commonService.toSnakeCase(BlockCategories.INDUSTRIES))
+            .then(response => {
+            setIndustries(response.data);
+        })
+    }, [])
     // =========================================================================================
     // Snackbar configuration section:
 
@@ -49,6 +63,7 @@ const ClientsAdd: React.FC<{category: string}> = ({category}) => {
             isActive: true,
             image: (null as (File | null)),
             translations: formService.generateDefaultValues(languages),
+            parent: -1,
         }
     });
 
@@ -57,7 +72,7 @@ const ClientsAdd: React.FC<{category: string}> = ({category}) => {
         if (methods.getValues('image') === null) return;
         const formData = new FormData();
         formData.append('category', category);
-        formData.append('parentId', '-1');
+        formData.append('parentId', String(methods.getValues('parent')));
         formData.append('image', (methods.getValues('image') as Blob));
         formData.append('isActive', String(methods.getValues('isActive')));
         formData.append('translations', JSON.stringify(methods.getValues('translations')));
@@ -111,6 +126,22 @@ const ClientsAdd: React.FC<{category: string}> = ({category}) => {
                         control={methods.control}
                         label="Is Active"
                     />
+
+                    {industries.length > 0 && <ValidatedSelect
+                        control={methods.control}
+                        controlName='parent'
+                        id="parent"
+                        label="Industry"
+                        placeholder="Industry"
+                        items={
+                            industries.map(
+                                industry => ({
+                                    id: industry.id,
+                                    name: blockService.getBlockName(industry),
+                                })
+                            )
+                        }
+                    />}
 
                     {/*<ValidatedSelect*/}
                     {/*    control={methods.control}*/}

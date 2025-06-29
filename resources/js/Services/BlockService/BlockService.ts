@@ -20,7 +20,7 @@ class BlockService {
     mapBlocksGrid = (blocks: Block []): BlockGridProps [] => {
         return blocks.map(block => ({
             id: block.id,
-            avatar: this.getBlockImage(block),
+            avatar: this.getBlockImage(block) || '',
             name: this.getBlockName(block),
             parent: this.getParentBlock(block.parentId, blocks),
             isActive: block.isActive,
@@ -54,14 +54,15 @@ class BlockService {
                 edit: 'Edit',
                 delete: 'Delete',
                 createdAt: block.createdAt,
-                image: this.getBlockImage(block),
+                image: this.getBlockImage(block) || '',
             }];
         })
         return rows;
     }
 
     getBlockImage = (block: Block) => {
-        return `${window.location.origin}/file/blocks/${block.images[0].url}`
+        if (block.images.length === 0) return null;
+        return `${window.location.origin}/file/blocks/${block.images[0].url}`;
     }
 
     getImageUrl = (url: string) => {
@@ -176,6 +177,12 @@ class BlockService {
                     'Content-Type' : 'multipart/form-data',
                 }
             }
+        )
+    }
+
+    getActiveBlocks = (category: string) => {
+        return axios.get<Block []>(
+            `/api/website/get-blocks/${category}`,
         )
     }
 }

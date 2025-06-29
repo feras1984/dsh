@@ -114,7 +114,55 @@ const SidebarList: CustomTab [] = [
                 name: BlockCategories.ABOUT,
                 icon: 'about-us',
                 link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.ABOUT),
-                children: [],
+                children: [
+                    {
+                        name: BlockCategories.ABOUT_SDH,
+                        icon: 'about-us',
+                        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.ABOUT_SDH),
+                        children: [],
+                    },
+
+                    {
+                        name: BlockCategories.MISSION,
+                        icon: 'about-us',
+                        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.MISSION),
+                        children: [],
+                    },
+
+                    {
+                        name: BlockCategories.VISION,
+                        icon: 'about-us',
+                        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.VISION),
+                        children: [],
+                    },
+
+                    {
+                        name: BlockCategories.CORE_VALUES,
+                        icon: 'about-us',
+                        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.CORE_VALUES),
+                        children: [],
+                    },
+
+                    {
+                        name: BlockCategories.GENERAL_DIRECTOR_SPEECH,
+                        icon: 'about-us',
+                        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.GENERAL_DIRECTOR_SPEECH),
+                        children: [],
+                    },
+                    {
+                        name: BlockCategories.MANAGER_PROFILE,
+                        icon: 'about-us',
+                        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.MANAGER_PROFILE),
+                        children: [],
+                    },
+
+                    {
+                        name: BlockCategories.LEADERSHIP_PHILOSOPHY,
+                        icon: 'about-us',
+                        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.LEADERSHIP_PHILOSOPHY),
+                        children: [],
+                    },
+                ],
             },
             // {
             //     name: BlockCategories.MISSION,
@@ -141,6 +189,13 @@ const SidebarList: CustomTab [] = [
                 name: BlockCategories.INDUSTRIES,
                 icon: 'mission',
                 link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.INDUSTRIES),
+                children: [],
+            },
+
+            {
+                name: BlockCategories.PROJECTS,
+                icon: 'mission',
+                link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.PROJECTS),
                 children: [],
             },
 

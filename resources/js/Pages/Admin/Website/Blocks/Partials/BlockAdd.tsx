@@ -19,6 +19,12 @@ import StoreSectionAdd from "@/Pages/Admin/Website/Blocks/StoreSection/StoreSect
 import NewsAdd from "@/Pages/Admin/Website/Blocks/News/NewsAdd";
 import IndustriesAdd from "@/Pages/Admin/Website/Blocks/Industries/IndustriesAdd";
 import ArticlesAdd from "@/Pages/Admin/Website/Blocks/Articles/ArticlesAdd";
+import GeneralDirectorAdd from "@/Pages/Admin/Website/Blocks/GeneralDirectorSpeech/GeneralDirectorAdd";
+import ProjectsAdd from "@/Pages/Admin/Website/Blocks/Projects/ProjectsAdd";
+import ManagerProfileAdd from "@/Pages/Admin/Website/Blocks/ManagerProfile/ManagerProfileAdd";
+import LeadershipPhilosophyAdd from "@/Pages/Admin/Website/Blocks/LeadershipPhilosophy/LeadershipPhilosophyAdd";
+import VisionAdd from "@/Pages/Admin/Website/Blocks/Vision/VisionAdd";
+import CoreValuesAdd from "@/Pages/Admin/Website/Blocks/CoreValues/CoreValuesAdd";
 
 const BlockAdd = ({category}: PageProps<{category: string}>) => {
     const commonService = Container.get(CommonService);
@@ -36,7 +42,7 @@ const BlockAdd = ({category}: PageProps<{category: string}>) => {
             break;
         }
 
-        case BlockCategories.ABOUT: {
+        case BlockCategories.ABOUT_SDH: {
             AddComponent = () => <AboutAdd category={category}></AboutAdd>;
             break;
         }
@@ -53,6 +59,16 @@ const BlockAdd = ({category}: PageProps<{category: string}>) => {
 
         case BlockCategories.MISSION: {
             AddComponent = () => <MissionAdd category={category}></MissionAdd>
+            break;
+        }
+
+        case BlockCategories.VISION: {
+            AddComponent = () => <VisionAdd category={category}></VisionAdd>
+            break;
+        }
+
+        case BlockCategories.CORE_VALUES: {
+            AddComponent = () => <CoreValuesAdd category={category}></CoreValuesAdd>
             break;
         }
 
@@ -74,6 +90,27 @@ const BlockAdd = ({category}: PageProps<{category: string}>) => {
 
         case BlockCategories.INDUSTRIES: {
             AddComponent = () => <IndustriesAdd category={category}></IndustriesAdd>
+            break;
+        }
+
+        case BlockCategories.GENERAL_DIRECTOR_SPEECH: {
+          AddComponent = () => <GeneralDirectorAdd category={category}></GeneralDirectorAdd>
+            break;
+        }
+
+        case BlockCategories.MANAGER_PROFILE: {
+            AddComponent = () => <ManagerProfileAdd category={category}></ManagerProfileAdd>
+            break;
+        }
+
+        case BlockCategories.LEADERSHIP_PHILOSOPHY: {
+            AddComponent = () => <LeadershipPhilosophyAdd category={category}></LeadershipPhilosophyAdd>
+            break;
+        }
+
+
+        case BlockCategories.PROJECTS: {
+            AddComponent = () => <ProjectsAdd category={category}></ProjectsAdd>
             break;
         }
 

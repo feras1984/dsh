@@ -60,7 +60,7 @@ const MissionUpdate: React.FC<{category: string, block: Block}> = ({category, bl
         resolver: zodResolver(blockSchema),
         defaultValues: {
             isActive: selectedBlock.isActive,
-            image: (selectedBlock.images[0].url as (File | string)),
+            // image: (selectedBlock.images[0].url as (File | string)),
             translations: blockService.getTranslationsDetails(selectedBlock.translations),
         }
     });
@@ -68,22 +68,22 @@ const MissionUpdate: React.FC<{category: string, block: Block}> = ({category, bl
     // =========================================================================================
     // Handle image upload:
 
-    const onUpload = () => {
-        const imageId = selectedBlock.images.find(img => img.isCover)?.id || -1;
-        const formData = new FormData();
-        formData.append('image', (methods.getValues('image') as Blob));
-        formData.append('imageId', String(imageId));
-        blockService.uploadImage(formData, block.id).then(response => {
-            setSelectedBlock(response.data);
-            setSnackbar(snackbarState =>
-                ({ ...snackbarState, open: true, message: 'Image has been updated!', severity: "success" })
-            );
-        }).catch(error => {
-            setSnackbar(snackbarState =>
-                ({ ...snackbarState, open: true, message: 'Error Happened while uploading image!', severity: "error" })
-            );
-        })
-    }
+    // const onUpload = () => {
+    //     const imageId = selectedBlock.images.find(img => img.isCover)?.id || -1;
+    //     const formData = new FormData();
+    //     formData.append('image', (methods.getValues('image') as Blob));
+    //     formData.append('imageId', String(imageId));
+    //     blockService.uploadImage(formData, block.id).then(response => {
+    //         setSelectedBlock(response.data);
+    //         setSnackbar(snackbarState =>
+    //             ({ ...snackbarState, open: true, message: 'Image has been updated!', severity: "success" })
+    //         );
+    //     }).catch(error => {
+    //         setSnackbar(snackbarState =>
+    //             ({ ...snackbarState, open: true, message: 'Error Happened while uploading image!', severity: "error" })
+    //         );
+    //     })
+    // }
 
     // =========================================================================================
     // Handle delete block
@@ -141,9 +141,9 @@ const MissionUpdate: React.FC<{category: string, block: Block}> = ({category, bl
         })
     }
 
-    React.useEffect(() => {
-        methods.getValues('image');
-    }, [methods]);
+    // React.useEffect(() => {
+    //     methods.getValues('image');
+    // }, [methods]);
     return (
         <Box>
             <Breadcrumbs>
@@ -164,12 +164,12 @@ const MissionUpdate: React.FC<{category: string, block: Block}> = ({category, bl
                     autoComplete="off"
                     onSubmit={methods.handleSubmit(onSubmit)}
                 >
-                    <ValidatedImage
-                        controllerName="image"
-                        methods={methods}
-                        image={blockService.getBlockImage(block)}
-                        onUpload={onUpload}
-                    />
+                    {/*<ValidatedImage*/}
+                    {/*    controllerName="image"*/}
+                    {/*    methods={methods}*/}
+                    {/*    image={blockService.getBlockImage(block)}*/}
+                    {/*    onUpload={onUpload}*/}
+                    {/*/>*/}
 
                     <ValidatedSwitch
                         controlName="isActive"

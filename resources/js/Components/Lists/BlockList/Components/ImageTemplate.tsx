@@ -6,9 +6,9 @@ import {BlockGridProps} from "../../Interfaces";
 const ImageTemplate = (props: BlockGridProps) => {
     return (
         <ListItem sx={{padding: 0}}>
-            <ListItemAvatar>
-                <Avatar src={props.avatar} />
-            </ListItemAvatar>
+            {props.avatar && <ListItemAvatar>
+                <Avatar src={props.avatar}/>
+            </ListItemAvatar>}
             <ListItemText primary={props.name} secondary={props.createdAt} />
         </ListItem>
     );

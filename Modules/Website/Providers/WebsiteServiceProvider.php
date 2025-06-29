@@ -8,6 +8,8 @@ use Modules\Website\Services\Articles\ArticleCategoryService;
 use Modules\Website\Services\Articles\ArticleService;
 use Modules\Website\Services\Blocks\BlockCategoryService;
 use Modules\Website\Services\Blocks\BlockService;
+use Modules\Website\Services\Blocks\ClientService;
+use Modules\Website\Services\Blocks\ProjectService;
 use Modules\Website\Services\menus\MenuCategoryService;
 use Modules\Website\Services\menus\MenuService;
 
@@ -46,7 +48,17 @@ class WebsiteServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
 
         $this->app->singleton('BlockCategoryService', function () {
-            return new BlockCategoryService();
+            if (request()->has('category')) {
+                $category = request()->get('category');
+                return match ($category) {
+                    'clients' => new ClientService(),
+                    'projects' => new ProjectService(),
+                    default => new BlockCategoryService(),
+                };
+            } else {
+                return new BlockCategoryService();
+            }
+
         });
 
         $this->app->singleton('BlockService', function () {

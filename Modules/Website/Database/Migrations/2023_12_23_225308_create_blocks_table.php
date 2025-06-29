@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('is_active')->default(true);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
+            $table->string('classification')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')

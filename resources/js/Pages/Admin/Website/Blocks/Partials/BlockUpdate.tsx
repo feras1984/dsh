@@ -19,6 +19,12 @@ import StoreSectionUpdate from "@/Pages/Admin/Website/Blocks/StoreSection/StoreS
 import NewsUpdate from "@/Pages/Admin/Website/Blocks/News/NewsUpdate";
 import ArticlesUpdate from "@/Pages/Admin/Website/Blocks/Articles/ArticlesUpdate";
 import IndustriesUpdate from "@/Pages/Admin/Website/Blocks/Industries/IndustriesUpdate";
+import GeneralDirectorUpdate from "@/Pages/Admin/Website/Blocks/GeneralDirectorSpeech/GeneralDirectorUpdate";
+import ProjectsUpdate from "@/Pages/Admin/Website/Blocks/Projects/ProjectsUpdate";
+import ManagerProfileUpdate from "@/Pages/Admin/Website/Blocks/ManagerProfile/ManagerProfileUpdate";
+import LeadershipPhilosophyUpdate from "@/Pages/Admin/Website/Blocks/LeadershipPhilosophy/LeadershipPhilosophyUpdate";
+import VisionUpdate from "@/Pages/Admin/Website/Blocks/Vision/VisionUpdate";
+import CoreValuesUpdate from "@/Pages/Admin/Website/Blocks/CoreValues/CoreValuesUpdate";
 
 const BlockUpdate = ({category, block}: PageProps<{category: string, block: Block}>) => {
     const commonService = Container.get(CommonService);
@@ -36,7 +42,7 @@ const BlockUpdate = ({category, block}: PageProps<{category: string, block: Bloc
             break;
         }
 
-        case BlockCategories.ABOUT: {
+        case BlockCategories.ABOUT_SDH: {
             UpdateComponent = () => <AboutUpdate block={block} category={category}></AboutUpdate>;
             break;
         }
@@ -53,6 +59,16 @@ const BlockUpdate = ({category, block}: PageProps<{category: string, block: Bloc
 
         case BlockCategories.MISSION: {
             UpdateComponent = () => <MissionUpdate block={block} category={category}></MissionUpdate>
+            break;
+        }
+
+        case BlockCategories.VISION: {
+            UpdateComponent = () => <VisionUpdate block={block} category={category}></VisionUpdate>
+            break;
+        }
+
+        case BlockCategories.CORE_VALUES: {
+            UpdateComponent = () => <CoreValuesUpdate block={block} category={category}></CoreValuesUpdate>
             break;
         }
 
@@ -73,6 +89,26 @@ const BlockUpdate = ({category, block}: PageProps<{category: string, block: Bloc
 
         case BlockCategories.INDUSTRIES: {
             UpdateComponent = () => <IndustriesUpdate block={block} category={category}></IndustriesUpdate>
+            break;
+        }
+
+        case BlockCategories.GENERAL_DIRECTOR_SPEECH: {
+            UpdateComponent = () => <GeneralDirectorUpdate block={block} category={category}></GeneralDirectorUpdate>
+            break;
+        }
+
+        case BlockCategories.MANAGER_PROFILE: {
+            UpdateComponent = () => <ManagerProfileUpdate block={block} category={category}></ManagerProfileUpdate>
+            break;
+        }
+
+        case BlockCategories.LEADERSHIP_PHILOSOPHY: {
+            UpdateComponent = () => <LeadershipPhilosophyUpdate block={block} category={category}></LeadershipPhilosophyUpdate>
+            break;
+        }
+
+        case BlockCategories.PROJECTS: {
+            UpdateComponent = () => <ProjectsUpdate block={block} category={category}></ProjectsUpdate>
             break;
         }
 

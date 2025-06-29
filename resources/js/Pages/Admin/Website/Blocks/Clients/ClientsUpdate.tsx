@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {PageProps} from "@/types";
 import {Block} from "@/models/block/Block";
 import {Container} from "typedi";
@@ -17,6 +17,8 @@ import BasicTranslation from "@/Components/Translations/BasicTranslation";
 import CustomButton from "@/Components/Button/CustomButton";
 import CustomSnackbar from "@/Components/Snackbar/CustomSnackbar";
 import DeleteModal from "@/Components/DeleteModal/DeleteModal";
+import BlockCategories from "@/Enums/BlockCategories";
+import ValidatedSelect from "@/Components/ValidatedComponents/ValidatedSelect";
 
 const ClientsUpdate: React.FC<{category: string, block: Block}> = ({category, block})=> {
     const formService = Container.get(FormService);
@@ -24,6 +26,17 @@ const ClientsUpdate: React.FC<{category: string, block: Block}> = ({category, bl
     const commonService = Container.get(CommonService);
     const [selectedBlock, setSelectedBlock] = useState<Block>({...block});
     const languages = usePage().props.settings.languages;
+    const [industries, setIndustries] = React.useState<Block []>([]);
+
+    //==========================================================================================
+    // Get the industries:
+    useEffect(() => {
+        blockService
+            .getActiveBlocks(commonService.toSnakeCase(BlockCategories.INDUSTRIES))
+            .then(response => {
+                setIndustries(response.data);
+            })
+    }, [])
     // =========================================================================================
     // Snackbar configuration section:
 
@@ -60,6 +73,7 @@ const ClientsUpdate: React.FC<{category: string, block: Block}> = ({category, bl
         reValidateMode: "onBlur",
         resolver: zodResolver(blockSchema),
         defaultValues: {
+            parent: selectedBlock.parentId,
             isActive: selectedBlock.isActive,
             image: (selectedBlock.images[0].url as (File | string)),
             translations: blockService.getTranslationsDetails(selectedBlock.translations),
@@ -129,6 +143,7 @@ const ClientsUpdate: React.FC<{category: string, block: Block}> = ({category, bl
         formData.append('isActive', String(methods.getValues('isActive')));
         formData.append('translations', JSON.stringify(methods.getValues('translations')));
         formData.append('blockId', String(block.id));
+        formData.append('parentId', String(methods.getValues('parent')));
 
         blockService.updateBlock(formData, block.id).then(response => {
             setSelectedBlock(response.data);
@@ -181,6 +196,22 @@ const ClientsUpdate: React.FC<{category: string, block: Block}> = ({category, bl
                         label="Is Active"
                         sendSwitchState={(value) => receiveSwitchState(value)}
                     />
+
+                    {industries.length > 0 && <ValidatedSelect
+                        control={methods.control}
+                        controlName='parent'
+                        id="parent"
+                        label="Industry"
+                        placeholder="Industry"
+                        items={
+                            industries.map(
+                                industry => ({
+                                    id: industry.id,
+                                    name: blockService.getBlockName(industry),
+                                })
+                            )
+                        }
+                    />}
 
                     {/*<ValidatedSelect*/}
                     {/*    control={methods.control}*/}

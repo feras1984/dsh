@@ -36,6 +36,16 @@ class BlockController extends Controller
         ]);
     }
 
+    /**
+     * API Function to get the industries
+     * @return JsonResponse
+     */
+
+    public function getActiveBlocks(string $category): JsonResponse
+    {
+        return \response()->json(BlockService::getActiveBlocksForAdmin($category));
+    }
+
     public function store(): JsonResponse
     {
         $data = \request()->all();

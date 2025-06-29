@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Modules\Website\Http\Controllers\Admin\BlockController;
+use Modules\Website\Http\Controllers\WebsiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +15,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//
+//Route::middleware('auth:api')->get('/website', function (Request $request) {
+//    return $request->user();
+//});
 
-Route::middleware('auth:api')->get('/website', function (Request $request) {
-    return $request->user();
-});
+Route::get('get-blocks/{category}', [BlockController::class, 'getActiveBlocks']);
