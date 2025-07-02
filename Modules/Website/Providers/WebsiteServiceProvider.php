@@ -48,21 +48,21 @@ class WebsiteServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
 
         $this->app->singleton('BlockCategoryService', function () {
+            return new BlockCategoryService();
+        });
+
+        $this->app->singleton('BlockService', function () {
             if (request()->has('category')) {
                 $category = request()->get('category');
                 return match ($category) {
                     'clients' => new ClientService(),
                     'projects' => new ProjectService(),
-                    default => new BlockCategoryService(),
+                    default => new BlockService(),
                 };
             } else {
-                return new BlockCategoryService();
+                return new BlockService();
             }
-
-        });
-
-        $this->app->singleton('BlockService', function () {
-            return new BlockService();
+//            return new BlockService();
         });
 
         $this->app->singleton('MenuCategoryService', function () {

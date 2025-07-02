@@ -25,6 +25,7 @@ import ManagerProfileUpdate from "@/Pages/Admin/Website/Blocks/ManagerProfile/Ma
 import LeadershipPhilosophyUpdate from "@/Pages/Admin/Website/Blocks/LeadershipPhilosophy/LeadershipPhilosophyUpdate";
 import VisionUpdate from "@/Pages/Admin/Website/Blocks/Vision/VisionUpdate";
 import CoreValuesUpdate from "@/Pages/Admin/Website/Blocks/CoreValues/CoreValuesUpdate";
+import Project from "@/models/block/Project";
 
 const BlockUpdate = ({category, block}: PageProps<{category: string, block: Block}>) => {
     const commonService = Container.get(CommonService);
@@ -108,7 +109,7 @@ const BlockUpdate = ({category, block}: PageProps<{category: string, block: Bloc
         }
 
         case BlockCategories.PROJECTS: {
-            UpdateComponent = () => <ProjectsUpdate block={block} category={category}></ProjectsUpdate>
+            UpdateComponent = () => <ProjectsUpdate block={block as Project} category={category}></ProjectsUpdate>
             break;
         }
 

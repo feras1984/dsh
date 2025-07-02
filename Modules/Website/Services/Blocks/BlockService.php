@@ -13,8 +13,8 @@ use Modules\Website\Entities\BlockTranslation;
 class BlockService
 {
 
-    private string $imageContainer;
-    private string $reference;
+    protected string $imageContainer;
+    protected string $reference;
 
     public function __construct()
     {
@@ -157,7 +157,7 @@ class BlockService
         return $blockModel;
     }
 
-    private function fillBlockForm(Block &$block): void
+    protected function fillBlockForm(Block &$block): void
     {
         $data = request()->all();
 //        dd(json_decode($data['translations']));
@@ -327,7 +327,7 @@ class BlockService
         ]);
     }
 
-    public function updateTranslations(Array $data, Block $block): array
+    public function updateTranslations(Array $data, Block $block)
     {
         //Store Date if existed:
         if (array_key_exists('startDate', $data)) {
@@ -338,6 +338,12 @@ class BlockService
         if (array_key_exists('endDate', $data)) {
             $block['end_date'] = Carbon::make($data['endDate']);
             $block->save();
+        }
+
+        //Store parentID if existed:
+        if (array_key_exists('parentId', $data)) {
+            $block->parent_id = $data['parentId'];
+            $block->update();
         }
 
 
@@ -359,7 +365,8 @@ class BlockService
             $translation->update();
         }
 
-        return $this->mapBlockModel($block);
+//        return $this->mapBlockModel($block);
+        return Block::query()->where('id', $block->id)->first();
     }
 
     public function deleteBlock(Block $block): void

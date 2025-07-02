@@ -14,12 +14,30 @@ import ValidatedCheckbox from "@/Components/ValidatedComponents/ValidatedCheckbo
 import BasicTranslation from "@/Components/Translations/BasicTranslation";
 import CustomButton from "@/Components/Button/CustomButton";
 import CustomSnackbar from "@/Components/Snackbar/CustomSnackbar";
+import ValidatedInput from "@/Components/ValidatedComponents/ValidatedInput";
+import ValidatedDatePicker from "@/Components/ValidatedComponents/ValidatedDatePicker";
+import {Block} from "@/models/block/Block";
+import BlockCategories from "@/Enums/BlockCategories";
+import ValidatedSelect from "@/Components/ValidatedComponents/ValidatedSelect";
+import ValidatedSwitch from "@/Components/ValidatedComponents/ValidatedSwitch";
 
 const ProjectsAdd: React.FC<{category: string}> = ({category}) => {
     const formService = Container.get(FormService);
     const blockService = Container.get(BlockService);
     const commonService = Container.get(CommonService);
     const languages = usePage().props.settings.languages;
+    const [clients, setClients] = React.useState<Block []>([]);
+    const [showProgression, setShowProgression] = React.useState<boolean>(false);
+
+    //==========================================================================================
+    // Get the clients:
+    React.useEffect(() => {
+        blockService
+            .getActiveBlocks(commonService.toSnakeCase(BlockCategories.CLIENTS))
+            .then(response => {
+                setClients(response.data);
+            })
+    }, [])
     // =========================================================================================
     // Snackbar configuration section:
 
@@ -29,6 +47,29 @@ const ProjectsAdd: React.FC<{category: string}> = ({category}) => {
     // =========================================================================================
 
     const blockSchema = z.object({
+        location: z.string().min(5, {message: 'Location field is required'}),
+        completeProject: z.object({
+            isCompleted: z.boolean().default(true),
+            dateOfCompletion: z.date().min(new Date('2002-07-15'), {message: "Date is Required"}),
+        }).refine(({isCompleted, dateOfCompletion}) => {
+            return (isCompleted && dateOfCompletion.getTime() < (new Date()).getTime())
+                || (!isCompleted && dateOfCompletion.getTime() > (new Date()).getTime());
+        }, {
+            message:  "Completion date of the project under construction must be in the future!, Completed project must be in the past!",
+            path: ["dateOfCompletion"],
+        }),
+
+        value: z.string().default('0')
+            .refine(formService.isNumeric, {message: 'Estimated value must be a number'})
+            .refine(formService.isPositive, {message: 'Estimated value must be a positive number'}),
+        progression: z.string().default('100')
+            .refine(formService.isNumeric, {message: 'Estimated value must be a number'})
+            .refine(formService.isPositive, {message: 'Estimated value must be a positive number'})
+            .refine((percent) => (
+                parseFloat(percent) <= 100
+            ), {
+                message: 'maximum number is 100',
+            }),
         isActive: z.boolean().default(true),
         // Record key is "ar" or "en" of length 2:
         translations: z.record(z.string().length(2),z.object({
@@ -45,6 +86,14 @@ const ProjectsAdd: React.FC<{category: string}> = ({category}) => {
         reValidateMode: "onBlur",
         resolver: zodResolver(blockSchema),
         defaultValues: {
+            parent: -1,
+            location: '',
+            completeProject: {
+                dateOfCompletion: new Date(),
+                isCompleted: true,
+            },
+            value: 0,
+            progression: '100',
             isActive: true,
             image: (null as (File | null)),
             translations: formService.generateDefaultValues(languages),
@@ -56,12 +105,18 @@ const ProjectsAdd: React.FC<{category: string}> = ({category}) => {
         if (methods.getValues('image') === null) return;
         const formData = new FormData();
         formData.append('category', category);
-        formData.append('parentId', '-1');
+        formData.append('parentId', String(methods.getValues('parent')));
+        formData.append('location', methods.getValues('location'));
+        formData.append('dateOfCompletion', new Date(methods.getValues('completeProject.dateOfCompletion')).toDateString());
+        formData.append('value', String(methods.getValues('value')));
+        formData.append('isCompleted', String(methods.getValues('completeProject.isCompleted')));
+        formData.append('progression', String(methods.getValues('progression')));
         formData.append('image', (methods.getValues('image') as Blob));
         formData.append('isActive', String(methods.getValues('isActive')));
         formData.append('translations', JSON.stringify(methods.getValues('translations')));
         formData.append('isImage', 'true');
         formData.append('isCover', 'true');
+
 
         blockService.storeBlock(formData).then(response => {
             methods.reset();
@@ -78,6 +133,14 @@ const ProjectsAdd: React.FC<{category: string}> = ({category}) => {
     React.useEffect(() => {
         methods.getValues('image');
     }, [methods]);
+
+
+
+    const receiveSwitchState = (value: boolean) => {
+        methods.setValue('progression', value ? '100' : methods.getValues('progression'));
+        setShowProgression(!value);
+    }
+
     return (
         <Box>
             <Breadcrumbs>
@@ -103,12 +166,75 @@ const ProjectsAdd: React.FC<{category: string}> = ({category}) => {
                         methods={methods}
                     />
 
-                    <ValidatedCheckbox
+                    <ValidatedSwitch
+                        controlName="isActive"
                         name="isActive"
                         id="isActive"
                         color="secondary"
-                        control={methods.control}
+                        methods={methods}
                         label="Is Active"
+                    />
+
+                    <ValidatedSwitch
+                        controlName="completeProject.isCompleted"
+                        name="isCompleted"
+                        id="isCompleted"
+                        color="secondary"
+                        methods={methods}
+                        label="Is Completed"
+                        sendSwitchState={(value) => receiveSwitchState(value)}
+                    />
+
+                    {clients.length > 0 && <ValidatedSelect
+                        control={methods.control}
+                        controlName='parent'
+                        id="parent"
+                        label="Client"
+                        placeholder="Client"
+                        items={
+                            clients.map(
+                                client => ({
+                                    id: client.id,
+                                    name: blockService.getBlockName(client),
+                                })
+                            )
+                        }
+                    />}
+
+                    {showProgression && <ValidatedInput
+                        controlName="progression"
+                        name="progression"
+                        id="progression"
+                        label="Construction Progress"
+                        placeholder="Construction Progress"
+                        control={methods.control}
+                        adornment="%"
+                    />}
+
+                    <ValidatedInput
+                        controlName="location"
+                        name="location"
+                        id="location"
+                        label="Location"
+                        placeholder="Location"
+                        control={methods.control}
+                    />
+
+                    <ValidatedInput
+                        controlName="value"
+                        name="value"
+                        id="value"
+                        label="Estimated value"
+                        placeholder="Estimated value"
+                        control={methods.control}
+                        adornment="AED"
+                    />
+
+                    <ValidatedDatePicker
+                        controlName="completeProject.dateOfCompletion"
+                        methods={methods}
+                        label="Date Of Completion"
+
                     />
 
                     {/*<ValidatedSelect*/}

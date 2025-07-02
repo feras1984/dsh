@@ -16,7 +16,8 @@ class Project extends Model
         'location',
         'date_of_completion',
         'value',
-        'is_completed'
+        'is_completed',
+        'progression',
     ];
 
     protected $casts = [

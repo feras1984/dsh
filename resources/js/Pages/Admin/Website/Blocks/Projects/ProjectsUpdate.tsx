@@ -16,14 +16,34 @@ import BasicTranslation from "@/Components/Translations/BasicTranslation";
 import CustomButton from "@/Components/Button/CustomButton";
 import CustomSnackbar from "@/Components/Snackbar/CustomSnackbar";
 import DeleteModal from "@/Components/DeleteModal/DeleteModal";
+import Project from "@/models/block/Project";
+import project from "@/models/block/Project";
+import BlockCategories from "@/Enums/BlockCategories";
+import ValidatedCheckbox from "@/Components/ValidatedComponents/ValidatedCheckbox";
+import ValidatedSelect from "@/Components/ValidatedComponents/ValidatedSelect";
+import ValidatedInput from "@/Components/ValidatedComponents/ValidatedInput";
+import ValidatedDatePicker from "@/Components/ValidatedComponents/ValidatedDatePicker";
 
 
-const ProjectsUpdate: React.FC<{category: string, block: Block}> = ({category, block}) => {
+const ProjectsUpdate: React.FC<{category: string, block: Project}> = ({category, block}) => {
     const formService = Container.get(FormService);
     const blockService = Container.get(BlockService);
     const commonService = Container.get(CommonService);
-    const [selectedBlock, setSelectedBlock] = useState<Block>({...block});
+    const [selectedBlock, setSelectedBlock] = useState<Project>({...block});
     const languages = usePage().props.settings.languages;
+    const [clients, setClients] = React.useState<Block []>([]);
+    const [showProgression, setShowProgression] = React.useState<boolean>(false);
+
+    //==========================================================================================
+    // Get the clients:
+    React.useEffect(() => {
+        blockService
+            .getActiveBlocks(commonService.toSnakeCase(BlockCategories.CLIENTS))
+            .then(response => {
+                setClients(response.data);
+            })
+    }, [])
+    // =========================================================================================
     // =========================================================================================
     // Snackbar configuration section:
 
@@ -44,6 +64,28 @@ const ProjectsUpdate: React.FC<{category: string, block: Block}> = ({category, b
     // =========================================================================================
 
     const blockSchema = z.object({
+        location: z.string().min(5, {message: 'Location field is required'}),
+        completeProject: z.object({
+            isCompleted: z.boolean().default(true),
+            dateOfCompletion: z.date().min(new Date('2002-07-15'), {message: "Date is Required"}),
+        }).refine(({isCompleted, dateOfCompletion}) => {
+            return (isCompleted && dateOfCompletion.getTime() < (new Date()).getTime())
+                || (!isCompleted && dateOfCompletion.getTime() > (new Date()).getTime());
+        }, {
+            message:  "Completion date of the project under construction must be in the future!, Completed project must be in the past!",
+            path: ["dateOfCompletion"],
+        }),
+        value: z.string().default('0')
+            .refine(formService.isNumeric, {message: 'Estimated value must be a number'})
+            .refine(formService.isPositive, {message: 'Estimated value must be a positive number'}),
+        progression: z.string().default('100')
+            .refine(formService.isNumeric, {message: 'Estimated value must be a number'})
+            .refine(formService.isPositive, {message: 'Estimated value must be a positive number'})
+            .refine((percent) => (
+                parseFloat(percent) <= 100
+            ), {
+                message: 'maximum number is 100',
+            }),
         isActive: z.boolean().default(true),
         // Record key is "ar" or "en" of length 2:
         translations: z.record(z.string().length(2),z.object({
@@ -60,6 +102,14 @@ const ProjectsUpdate: React.FC<{category: string, block: Block}> = ({category, b
         reValidateMode: "onBlur",
         resolver: zodResolver(blockSchema),
         defaultValues: {
+            parent: selectedBlock.parentId,
+            location: selectedBlock.location,
+            completeProject: {
+                dateOfCompletion: new Date(selectedBlock.completionDate),
+                isCompleted: selectedBlock.isCompleted,
+            },
+            value: selectedBlock.value,
+            progression: String(selectedBlock.progression),
             isActive: selectedBlock.isActive,
             image: (selectedBlock.images[0].url as (File | string)),
             translations: blockService.getTranslationsDetails(selectedBlock.translations),
@@ -75,7 +125,7 @@ const ProjectsUpdate: React.FC<{category: string, block: Block}> = ({category, b
         formData.append('image', (methods.getValues('image') as Blob));
         formData.append('imageId', String(imageId));
         blockService.uploadImage(formData, block.id).then(response => {
-            setSelectedBlock(response.data);
+            setSelectedBlock(project => ({...project, images: response.data.images}));
             setSnackbar(snackbarState =>
                 ({ ...snackbarState, open: true, message: 'Image has been updated!', severity: "success" })
             );
@@ -109,29 +159,25 @@ const ProjectsUpdate: React.FC<{category: string, block: Block}> = ({category, b
     // Handle Switch button:
 
     const receiveSwitchState = (value: boolean) => {
-        const formData = new FormData();
-        formData.append('isActive', String(value));
-
-        blockService.blockActivation(formData, block.id).then(response => {
-            setSelectedBlock(response.data);
-            setSnackbar(snackbarState =>
-                ({ ...snackbarState, open: true, message: 'Block status has been successfully updated!', severity: "success" })
-            );
-        }).catch(error => {
-            setSnackbar(snackbarState =>
-                ({ ...snackbarState, open: true, message: 'Error Happened while updating block status!', severity: "error" })
-            );
-        })
+        methods.setValue('progression', value ? '100' : methods.getValues('progression'));
+        setShowProgression(!value);
     }
 
     const onSubmit =  () => {
         const formData = new FormData();
+        formData.append('category', selectedBlock.category);
         formData.append('isActive', String(methods.getValues('isActive')));
         formData.append('translations', JSON.stringify(methods.getValues('translations')));
         formData.append('blockId', String(block.id));
+        formData.append('parentId', String(methods.getValues('parent')));
+        formData.append('location', methods.getValues('location'));
+        formData.append('dateOfCompletion', new Date(methods.getValues('completeProject.dateOfCompletion')).toDateString());
+        formData.append('value', String(methods.getValues('value')));
+        formData.append('isCompleted', String(methods.getValues('completeProject.isCompleted')));
+        formData.append('progression', String(methods.getValues('progression')));
 
         blockService.updateBlock(formData, block.id).then(response => {
-            setSelectedBlock(response.data);
+            setSelectedBlock(response.data as Project);
             setSnackbar(snackbarState =>
                 ({ ...snackbarState, open: true, message: 'The block has been updated', severity: "success" })
             );
@@ -179,7 +225,68 @@ const ProjectsUpdate: React.FC<{category: string, block: Block}> = ({category, b
                         color="secondary"
                         methods={methods}
                         label="Is Active"
+                    />
+
+                    <ValidatedSwitch
+                        controlName="completeProject.isCompleted"
+                        name="isCompleted"
+                        id="isCompleted"
+                        color="secondary"
+                        methods={methods}
+                        label="Is Completed"
                         sendSwitchState={(value) => receiveSwitchState(value)}
+                    />
+
+                    {clients.length > 0 && <ValidatedSelect
+                        control={methods.control}
+                        controlName='parent'
+                        id="parent"
+                        label="Client"
+                        placeholder="Client"
+                        items={
+                            clients.map(
+                                client => ({
+                                    id: client.id,
+                                    name: blockService.getBlockName(client),
+                                })
+                            )
+                        }
+                    />}
+
+                    {showProgression && <ValidatedInput
+                        controlName="progression"
+                        name="progression"
+                        id="progression"
+                        label="Construction Progress"
+                        placeholder="Construction Progress"
+                        control={methods.control}
+                        adornment="%"
+                    />}
+
+                    <ValidatedInput
+                        controlName="location"
+                        name="location"
+                        id="location"
+                        label="Location"
+                        placeholder="Location"
+                        control={methods.control}
+                    />
+
+                    <ValidatedInput
+                        controlName="value"
+                        name="value"
+                        id="value"
+                        label="Estimated value"
+                        placeholder="Estimated value"
+                        control={methods.control}
+                        adornment="AED"
+                    />
+
+                    <ValidatedDatePicker
+                        controlName="completeProject.dateOfCompletion"
+                        methods={methods}
+                        label="Date Of Completion"
+
                     />
 
                     {/*<ValidatedSelect*/}

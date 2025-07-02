@@ -6,7 +6,7 @@ class FileService {
     DefaultImage = '/file/defaults/default-cover.jpg';
 
     static LOGO = "/file/logo";
-    static MAX_FILE_SIZE = 200; //200KB.
+    static MAX_FILE_SIZE = 500; //500KB.
     convertBase64 = (file: any) => {
         return new Promise<string|ArrayBuffer|null>((resolve, reject) => {
             const fileReader = new FileReader();
