@@ -3,33 +3,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import BlockProps from "@/Interfaces/Site/BlockProps";
+import {useTranslation} from "react-i18next";
+import {Link, usePage} from "@inertiajs/react";
 
 const HeroSlider: React.FC<{slides: BlockProps []}> = ({slides}) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
     const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
     const fileURL = `${import.meta.env.VITE_APP_URL}/file/blocks`;
-
-    // const slides = [
-    //     {
-    //         title: "Excellence in Construction",
-    //         subtitle: "Building Tomorrow's Infrastructure Today",
-    //         description: "D S H delivers world-class construction solutions with unwavering commitment to quality and innovation.",
-    //         image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80"
-    //     },
-    //     {
-    //         title: "Innovative Engineering Solutions",
-    //         subtitle: "Precision • Quality • Reliability",
-    //         description: "Our expert team combines cutting-edge technology with proven methodologies to deliver exceptional results.",
-    //         image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80"
-    //     },
-    //     {
-    //         title: "Your Trusted Partner",
-    //         subtitle: "25+ Years of Industry Leadership",
-    //         description: "From concept to completion, we transform visions into reality with unmatched expertise and dedication.",
-    //         image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80"
-    //     }
-    // ];
+    const {t} = useTranslation();
+    const {lang} = usePage().props;
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -105,9 +88,13 @@ const HeroSlider: React.FC<{slides: BlockProps []}> = ({slides}) => {
                                 <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto" dangerouslySetInnerHTML={{ __html: slide.description }} >
                                     {/*{slide.description}*/}
                                 </p>
-                                <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                                    Learn More
-                                </button>
+                                {/*<Link href={`/${lang}/block/about-d-s-h`}>*/}
+                                {/*    <button*/}
+                                {/*        className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105">*/}
+                                {/*        {t('more')}*/}
+                                {/*    </button>*/}
+                                {/*</Link>*/}
+
                             </div>
                         </div>
                     </div>

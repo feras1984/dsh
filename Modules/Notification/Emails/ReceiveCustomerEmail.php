@@ -20,17 +20,34 @@ class ReceiveCustomerEmail extends Mailable
     private string $email;
     private string $message;
 
+    private string $mobile;
+
+    private string $company;
+
+    private string $industry;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, string $subject, string $from, string $message)
+    public function __construct(
+        $name,
+        string $subject,
+        string $from,
+        string $message,
+        string $mobile,
+        string $company,
+        string $industry,
+    )
     {
         $this->name = $name;
         $this->subject = $subject;
         $this->email = $from;
         $this->message = $message;
+        $this->mobile = $mobile;
+        $this->company = $company;
+        $this->industry = $industry;
     }
 
     /**
@@ -76,6 +93,9 @@ class ReceiveCustomerEmail extends Mailable
                 'name' => $this->name,
                 'from' => $this->email,
                 'message' => $this->message,
+                'mobile' => $this->mobile,
+                'company' => $this->company,
+                'industry' => $this->industry,
             ]
         );
     }

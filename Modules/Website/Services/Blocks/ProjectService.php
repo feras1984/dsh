@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Modules\File\Facades\UploadService;
 use Modules\Website\Entities\Block;
 use Modules\Website\Entities\Project;
+use Modules\Website\Enums\BlockCategoryEnum;
+use Modules\Website\Facades\Blocks\IndustryService;
 use Modules\Website\Services\Blocks\BlockService;
 
 class ProjectService extends BlockService
@@ -64,5 +66,31 @@ class ProjectService extends BlockService
         $this->fillProjectForm($project, $block->id);
         $project->update();
         return Block::query()->where('id', $block->id)->first();
+    }
+
+    public function getActiveBlocks($category): array
+    {
+        $blocks = $this->getActiveRawBlocks($category);
+        $projectModel = [];
+        $industries = IndustryService::getActiveBlocks(BlockCategoryEnum::INDUSTRIES->value);
+
+        foreach ($blocks as $block) {
+            $project = $block->project()->first();
+            $clientName = $this->getBlockName($block->parent);
+            $industryName = $this->getBlockName($block->parent->parent);
+            $projectModel[] = [
+                ...$this->mapLocaleBlock($block),
+                'industry' => $industryName,
+                'client' => $clientName,
+                'location' => $project->location,
+                'completionDate' => Carbon::make($project->date_of_completion)->format('d M-Y'),
+                'value' => $project->value,
+                'isCompleted' => (bool)$project->is_completed,
+                'progression' => $project->progression,
+                'status' => $project->is_completed ? 'Completed' : 'In Progress',
+            ];
+        }
+
+        return array_merge($projectModel, $industries);
     }
 }

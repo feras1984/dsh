@@ -1,4 +1,4 @@
-import {Head, Link} from "@inertiajs/react";
+import {Head, Link, usePage} from "@inertiajs/react";
 import HeaderLayout from "@/Layouts/Site/HeaderLayout";
 import MenuLink from "@/models/Link/MenuLink";
 import Language from "@/models/language/Language";
@@ -27,12 +27,24 @@ import Industries from "@/Components/Site/Industries/Industries";
 import News from "@/Components/Site/News/News";
 import HeroSlider from "@/Pages/Site/Home/Components/HeroSlider";
 import AboutUs from "@/Pages/Site/Home/Components/AboutUs";
-import {ArrowRight, Users} from "lucide-react";
+import {ArrowRight, Award, Building, Phone, Users} from "lucide-react";
+import ClientProps from "@/Interfaces/Site/ClientProps";
+import ProjectProps from "@/Interfaces/Site/ProjectProps";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import CommonService from "@/Services/CommonService/CommonService";
+import {Container} from "typedi";
+import "reflect-metadata";
+import BlockCategories from "@/Enums/BlockCategories";
+import MenuService from "@/Services/MenuService/MenuService";
+import ContactFormV2 from "@/Components/Site/Contact/ContactFormV2";
+import { useTranslation } from "react-i18next";
 
+gsap.registerPlugin(ScrollTrigger);
 interface HomeProps extends LinkListProps{
     mainSliders: BlockProps [],
     services: BlockProps [],
-    clients: BlockProps [],
+    clients: ClientProps [],
+    projects: ProjectProps [],
     galleries: BlockProps [],
     missions: BlockProps [],
     about: BlockProps [],
@@ -50,6 +62,7 @@ const Home:React.FC<HomeProps> = ({
                                         mainSliders,
                                         services,
                                         clients,
+                                        projects,
                                         galleries,
                                         missions,
                                         about,
@@ -57,10 +70,13 @@ const Home:React.FC<HomeProps> = ({
                                         articles,
                                         industries,
                                   }) => {
+    const commonService = Container.get(CommonService);
+    const menuService = Container.get(MenuService);
+    const yearsOfExperience = new Date().getFullYear() - 2002;
     const aboutUs = about[0];
+    const lang = usePage().props.lang;
+    const {t} = useTranslation();
     const dispatch = useAppDispatch();
-    const mainSliderRef = React.useRef<HTMLDivElement>(null);
-    const aboutRef = React.useRef<HTMLDivElement>(null);
 
     const aboutSectionRef = useRef<HTMLElement>(null);
     const aboutTextRef = useRef<HTMLDivElement>(null);
@@ -210,8 +226,10 @@ const Home:React.FC<HomeProps> = ({
             >
                 <Head title={'Home'}></Head>
 
+                {/* Hero Slider */}
                 <HeroSlider slides={mainSliders}></HeroSlider>
 
+                {/* About Us Section */}
                 <section
                     ref={aboutSectionRef}
                     className="py-20 bg-secondary/50"
@@ -225,13 +243,13 @@ const Home:React.FC<HomeProps> = ({
                                     dangerouslySetInnerHTML={{__html: aboutUs.description}}
                                 >
                                 </p>
-                                {/*<Link*/}
-                                {/*    to="/about"*/}
-                                {/*    className="inline-flex items-center bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 font-semibold hover:scale-105"*/}
-                                {/*>*/}
-                                {/*    Learn More About Us*/}
-                                {/*    <ArrowRight className="ml-2 h-5 w-5"/>*/}
-                                {/*</Link>*/}
+                                <Link
+                                    href={`/${lang}/block/${commonService.toSnakeCase(aboutUs.category)}`}
+                                    className="inline-flex items-center bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 font-semibold hover:scale-105"
+                                >
+                                    {t('learn-more-about-us')}
+                                    <ArrowRight className="ml-2 h-5 w-5"/>
+                                </Link>
                             </div>
                             <div ref={aboutImageRef} className="relative">
                                 <img
@@ -242,8 +260,8 @@ const Home:React.FC<HomeProps> = ({
                                 />
                                 <div ref={aboutBadgeRef}
                                      className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground p-6 rounded-lg shadow-xl">
-                                    <div className="text-3xl font-bold">25+</div>
-                                    <div className="text-sm">Years of Excellence</div>
+                                    <div className="text-3xl font-bold">{yearsOfExperience}+</div>
+                                    <div className="text-sm">{t('years-of-excellence')}</div>
                                 </div>
                             </div>
                         </div>
@@ -254,15 +272,17 @@ const Home:React.FC<HomeProps> = ({
                 <section className="py-20 bg-background clients-section">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-12">
-                            <h2 className="text-4xl font-bold mb-4 text-foreground">Our Valued Clients</h2>
+                            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('our-valued-clients')}</h2>
                             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                                We are proud to work with industry leaders and innovative companies
-                                who trust us with their most important projects.
+                                {t('client-home')}
                             </p>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-                            {clients.map((client, index) => (
+                            {clients
+                                .filter(client =>
+                                    client.category === commonService.toSnakeCase(BlockCategories.CLIENTS))
+                                .map((client, index) => (
                                 <div
                                     key={index}
                                     className="text-center group client-card"
@@ -279,10 +299,106 @@ const Home:React.FC<HomeProps> = ({
                             <Link
                                 // to="/clients"
                                 className="inline-flex items-center bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 font-semibold hover:scale-105"
-                                href={"/block/clients"}                            >
-                                View All Clients
+                                href={`/${lang}/block/${commonService.toSnakeCase(clients[0].category)}`}                            >
+                                {t('clients-more')}
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Link>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Projects Section */}
+                <section className="py-20 bg-secondary/50 projects-section">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('featured-projects')}</h2>
+                            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                                {t('projects-home')}
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {projects
+                                .filter(project => project.isCompleted)
+                                .sort(() => 0.5 - Math.random())
+                                .slice(0, 3).map((project, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-card border border-border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group project-card hover:-translate-y-2"
+                                >
+                                    <div className="relative overflow-hidden">
+                                        <img
+                                            src={`/file/blocks/${project.images[0].url}`}
+                                            alt={project.title}
+                                            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                                        />
+                                        <div className="absolute top-4 right-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-300 ${
+                        project.status === 'Completed'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {project.status}
+                    </span>
+                                        </div>
+                                    </div>
+                                    <div className="p-6">
+                                        <h3 className="text-xl font-semibold mb-3 text-foreground">{project.title}</h3>
+                                        <p
+                                            className="text-muted-foreground mb-4"
+                                            dangerouslySetInnerHTML={{__html: project.description}}
+                                        ></p>
+                                        <div className="flex items-center text-primary font-medium hover:text-primary/80 transition-colors">
+                                            <Building className="h-4 w-4 mr-2" />
+                                            View Details
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="text-center mt-12">
+                            <Link
+                                href={`/${lang}/block/${commonService.toSnakeCase(projects[0].category)}`}
+                                className="inline-flex items-center bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 font-semibold mr-4 hover:scale-105"
+                            >
+                                {t('view-projects')}
+                                <ArrowRight className="ml-2 h-5 w-5" />
+                            </Link>
+                            {/*<Link*/}
+                            {/*    href="/projects-under-execution"*/}
+                            {/*    className="inline-flex items-center border border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 font-semibold hover:scale-105"*/}
+                            {/*>*/}
+                            {/*    Projects Under Execution*/}
+                            {/*    <ArrowRight className="ml-2 h-5 w-5" />*/}
+                            {/*</Link>*/}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Contact Us Section */}
+                <section className="py-20 bg-background contact-section">
+                    <div className="container mx-auto px-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div className="contact-left">
+                                <h2 className="text-4xl font-bold mb-6 text-foreground">{t('get-in-touch')}</h2>
+                                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                                    {t('contact-home')}
+                                </p>
+
+                                <div className="space-y-4">
+                                    <div className="flex items-center hover:text-primary transition-colors duration-300">
+                                        <Phone className="h-5 w-5 text-primary mr-3" />
+                                        <span className="text-foreground">{menuService.getSplitLink(contactLinks, 'mobile')}</span>
+                                    </div>
+                                    <div className="flex items-center hover:text-primary transition-colors duration-300">
+                                        <Award className="h-5 w-5 text-primary mr-3" />
+                                        <span className="text-foreground">{menuService.getSplitLink(contactLinks, 'mail')}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ContactFormV2 industries={industries}></ContactFormV2>
                         </div>
                     </div>
                 </section>

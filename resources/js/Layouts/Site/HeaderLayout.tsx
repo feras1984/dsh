@@ -12,6 +12,7 @@ import Footer from "@/Components/Site/Footer/Footer";
 import styles from "./styles.module.scss";
 import FooterV1 from "@/Components/Site/Footer/FooterV1";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FooterV2 from "@/Components/Site/Footer/FooterV2";
 
 interface HeaderLayoutProps {
     children: ReactNode,
@@ -54,27 +55,28 @@ const HeaderLayout:React.FC<HeaderLayoutProps> =(
                     logo={logo}
                     languages={languages}></Header>
                 <div className={`${styles.minHeight} ${styles.marginTop}`}>{children}</div>
-                <div className={styles.whatsIcon}>
-                    <div className="flex justify-center align-middle gap-2">
-                        <a href="https://wa.me/971558399642?text=I'm%20interested%20" target="_blank">
-                            <IconButton color="success" size="large" sx={{bgcolor: '#fff'}}>
-                                <WhatsAppIcon sx={{fontSize: '32px'}}></WhatsAppIcon>
-                            </IconButton>
-                        </a>
+                {/*<div className={styles.whatsIcon}>*/}
+                {/*    <div className="flex justify-center align-middle gap-2">*/}
+                {/*        <a href="https://wa.me/971558399642?text=I'm%20interested%20" target="_blank">*/}
+                {/*            <IconButton color="success" size="large" sx={{bgcolor: '#fff'}}>*/}
+                {/*                <WhatsAppIcon sx={{fontSize: '32px'}}></WhatsAppIcon>*/}
+                {/*            </IconButton>*/}
+                {/*        </a>*/}
 
-                        <a href="https://wa.me/971543414809?text=I'm%20interested%20" target="_blank">
-                            <IconButton color="success" size="large" sx={{bgcolor: '#fff'}}>
-                                <WhatsAppIcon sx={{fontSize: '32px'}}></WhatsAppIcon>
-                            </IconButton>
-                        </a>
-                    </div>
-                </div>
+                {/*        <a href="https://wa.me/971543414809?text=I'm%20interested%20" target="_blank">*/}
+                {/*            <IconButton color="success" size="large" sx={{bgcolor: '#fff'}}>*/}
+                {/*                <WhatsAppIcon sx={{fontSize: '32px'}}></WhatsAppIcon>*/}
+                {/*            </IconButton>*/}
+                {/*        </a>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
 
 
 
                 {/*Footer Goes here*/}
-                <FooterV1 mainLinks={footerLinks}
+                <FooterV2 mainLinks={mainLinks}
+                          footerLinks={footerLinks}
                         socialLinks={socialLinks}
                         contactLinks={contactLinks}
                         logo={logo}

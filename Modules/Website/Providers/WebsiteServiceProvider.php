@@ -4,11 +4,16 @@ namespace Modules\Website\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Str;
+use Modules\Website\Enums\BlockCategoryEnum;
 use Modules\Website\Services\Articles\ArticleCategoryService;
 use Modules\Website\Services\Articles\ArticleService;
+use Modules\Website\Services\Blocks\AboutDSHService;
 use Modules\Website\Services\Blocks\BlockCategoryService;
 use Modules\Website\Services\Blocks\BlockService;
 use Modules\Website\Services\Blocks\ClientService;
+use Modules\Website\Services\Blocks\GeneralDirectorService;
+use Modules\Website\Services\Blocks\IndustryService;
 use Modules\Website\Services\Blocks\ProjectService;
 use Modules\Website\Services\menus\MenuCategoryService;
 use Modules\Website\Services\menus\MenuService;
@@ -53,16 +58,32 @@ class WebsiteServiceProvider extends ServiceProvider
 
         $this->app->singleton('BlockService', function () {
             if (request()->has('category')) {
+//                dd(request()->category);
                 $category = request()->get('category');
                 return match ($category) {
-                    'clients' => new ClientService(),
-                    'projects' => new ProjectService(),
+                    Str::slug(BlockCategoryEnum::CLIENTS->value) => new ClientService(),
+                    Str::slug(BlockCategoryEnum::PROJECTS->value) => new ProjectService(),
+                    Str::slug(BlockCategoryEnum::ABOUT_DSH->value) => new AboutDSHService(),
+                    Str::slug(BlockCategoryEnum::GENERAL_DIRECTOR_SPEECH->value) => new GeneralDirectorService(),
+                    Str::slug(BlockCategoryEnum::INDUSTRIES->value) => new IndustryService(),
                     default => new BlockService(),
                 };
             } else {
                 return new BlockService();
             }
 //            return new BlockService();
+        });
+
+        $this->app->singleton('industryService', function () {
+            return new IndustryService();
+        });
+
+        $this->app->singleton('ProjectService', function () {
+            return new ProjectService();
+        });
+
+        $this->app->singleton('ClientService', function () {
+            return new ClientService();
         });
 
         $this->app->singleton('MenuCategoryService', function () {

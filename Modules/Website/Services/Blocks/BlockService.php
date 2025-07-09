@@ -3,6 +3,8 @@
 namespace Modules\Website\Services\Blocks;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use JetBrains\PhpStorm\ArrayShape;
 use Modules\File\Facades\FileService;
 use Modules\File\Facades\UploadService;
@@ -88,6 +90,7 @@ class BlockService
 
         return [
             'id' => $block->id,
+            'category' => $block->category,
             'title' => $translation->name,
             'description' => $translation->description,
             'brief' => $translation->brief,
@@ -101,6 +104,15 @@ class BlockService
             'classification' => $block->classification,
         ];
 
+    }
+
+    protected function getBlockName(Block $block): string
+    {
+        $translation = BlockTranslation::query()
+            ->where('block_id', $block->id)
+            ->where('language', app()->getLocale())
+            ->first();
+        return $translation ? $translation->name : '';
     }
 
     public function mapBlockTranslationModel(BlockTranslation $translation): array
@@ -391,20 +403,24 @@ class BlockService
         $block->delete();
     }
 
-    //Site Service:
-    public function getActiveBlocks($category): array
+    protected function getActiveRawBlocks(string $category): Collection|array
     {
-//        $blocks = $category->blocks()
-//            ->where('category', $category)
-//            ->where('is_active', 1)
-//            ->orderBy('order', 'ASC')
-//            ->get();
-        $blocks = Block::query()
+        return Block::query()
             ->where('category', $category)
             ->where('is_active', 1)
             ->orderBy('order', 'ASC')
             ->orderBy('start_date', 'DESC')
+            ->with('children')
+//            ->whereHas('children', function ($query) use ($category) {
+//                return $query->where('parent_id', $query->id);
+//            })
             ->get();
+    }
+
+    //Site Service:
+    public function getActiveBlocks(string $category): array
+    {
+        $blocks = $this->getActiveRawBlocks($category);
 
         $blockModel = [];
         foreach ($blocks as $block) {

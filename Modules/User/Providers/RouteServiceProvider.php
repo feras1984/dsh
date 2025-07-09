@@ -11,7 +11,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 class RouteServiceProvider extends ServiceProvider
 {
     public const SITE_HOME = '/';
-    public const ADMIN_HOME = '/admin';
+    public const ADMIN_HOME = '/admin/website/get-block/main-section';
     /**
      * The module namespace to assume when generating URLs to actions.
      *

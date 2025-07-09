@@ -9,8 +9,10 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Modules\Setting\Facades\LanguageService;
 use Modules\Website\Entities\Block;
+use Modules\Website\Enums\BlockCategoryEnum;
 use Modules\Website\Enums\MenuCategoryEnum;
 use Modules\Website\Facades\Blocks\BlockService;
+use Modules\Website\Facades\Blocks\IndustryService;
 use Modules\Website\Facades\Menus\MenuService;
 
 class BlockController extends Controller
@@ -21,6 +23,8 @@ class BlockController extends Controller
      */
     public function index($category)
     {
+//        dd($category);
+        \request()->merge(['category' => $category]);
         $mainLinks = MenuService::getActiveLinks(Str::slug(MenuCategoryEnum::MAIN_MENU->value, '-'));
         $socialLinks = MenuService::getActiveLinks(Str::slug(MenuCategoryEnum::SOCIAL_MENU->value, '-'));
         $contactLinks = MenuService::getActiveLinks(Str::slug(MenuCategoryEnum::CONTACT_MENU->value, '-'));
@@ -28,8 +32,12 @@ class BlockController extends Controller
 
         $logo = 'logo.png';
         $languages = LanguageService::getActiveLanguages();
+        $blocks = match ($category) {
+            Str::slug(BlockCategoryEnum::CONTACT_US->value) =>
+            IndustryService::getActiveBlocks(Str::slug(BlockCategoryEnum::INDUSTRIES->value)),
+            default => BlockService::getActiveBlocks($category),
+        };
 
-        $blocks = BlockService::getActiveBlocks($category);
         return Inertia::render('Site/HubList', [
             'mainLinks' => $mainLinks,
             'socialLinks' => $socialLinks,

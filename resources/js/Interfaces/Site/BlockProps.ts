@@ -2,6 +2,7 @@ import File from "@/models/files/File";
 
 interface BlockProps {
     id: number;
+    category: string;
     title: string;
     description: string;
     brief: string;

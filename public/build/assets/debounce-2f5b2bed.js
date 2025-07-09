@@ -1,1 +1,0 @@
-function r(...u){return u.reduce((t,e)=>e==null?t:function(...n){t.apply(this,n),e.apply(this,n)},()=>{})}function c(u,t=166){let e;function i(...n){const o=()=>{u.apply(this,n)};clearTimeout(e),e=setTimeout(o,t)}return i.clear=()=>{clearTimeout(e)},i}export{r as c,c as d};

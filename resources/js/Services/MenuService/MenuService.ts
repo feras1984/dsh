@@ -7,7 +7,8 @@ import {Block} from "@/models/block/Block";
 import BlockTableProps from "@/Interfaces/DataTable/BlockTableProps";
 import CategoryTableProps from "@/Interfaces/DataTable/CategoryTableProps";
 import MenuTableProps from "@/Interfaces/DataTable/MenuTableProps";
-import {MenuGridProps} from "@/Components/Lists/Interfaces/LinkProps";
+import LinkProps, {MenuGridProps} from "@/Components/Lists/Interfaces/LinkProps";
+import MenuLink from "@/models/Link/MenuLink";
 
 type Translations = {
     [code: string] : {
@@ -161,6 +162,16 @@ class MenuService {
                 }
             }
         )
+    }
+
+    getSplitLink = (links: MenuLink [], value: string): string =>  {
+        return links
+            .filter(link => link.name.toLowerCase().includes(value))[0]
+            ?.url.split(':')[1] || '';
+    }
+
+    getAddress = () => {
+        return 'Office # 313 Makatib Building| Opp. Toyota AlMakhtoom road| Port Saeed, Dubai, UAE'.split('|');
     }
 }
 

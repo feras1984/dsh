@@ -25,6 +25,10 @@ import ManagerProfileAdd from "@/Pages/Admin/Website/Blocks/ManagerProfile/Manag
 import LeadershipPhilosophyAdd from "@/Pages/Admin/Website/Blocks/LeadershipPhilosophy/LeadershipPhilosophyAdd";
 import VisionAdd from "@/Pages/Admin/Website/Blocks/Vision/VisionAdd";
 import CoreValuesAdd from "@/Pages/Admin/Website/Blocks/CoreValues/CoreValuesAdd";
+import PrincipalActivitiesAdd from "@/Pages/Admin/Website/Blocks/PrincipalActivities/PrincipalActivitiesAdd";
+import QualityAssuranceAdd from "@/Pages/Admin/Website/Blocks/QualityAssurance/QualityAssuranceAdd";
+import SafetyPlanningAdd from "@/Pages/Admin/Website/Blocks/SafetyPlanning/SafetyPlanningAdd";
+import CompanyThoughtsAdd from "@/Pages/Admin/Website/Blocks/CompanyThoughts/CompanyThoughtsAdd";
 
 const BlockAdd = ({category}: PageProps<{category: string}>) => {
     const commonService = Container.get(CommonService);
@@ -42,7 +46,7 @@ const BlockAdd = ({category}: PageProps<{category: string}>) => {
             break;
         }
 
-        case BlockCategories.ABOUT_SDH: {
+        case BlockCategories.ABOUT_DSH: {
             AddComponent = () => <AboutAdd category={category}></AboutAdd>;
             break;
         }
@@ -90,6 +94,26 @@ const BlockAdd = ({category}: PageProps<{category: string}>) => {
 
         case BlockCategories.INDUSTRIES: {
             AddComponent = () => <IndustriesAdd category={category}></IndustriesAdd>
+            break;
+        }
+
+        case BlockCategories.PRINCIPAL_ACTIVITIES: {
+            AddComponent = () => <PrincipalActivitiesAdd category={category}></PrincipalActivitiesAdd>;
+            break;
+        }
+
+        case BlockCategories.QUALITY_ASSURANCE: {
+            AddComponent = () => <QualityAssuranceAdd category={category}></QualityAssuranceAdd>;
+            break;
+        }
+
+        case BlockCategories.SAFETY_PLANNING: {
+            AddComponent = () => <SafetyPlanningAdd category={category}></SafetyPlanningAdd>;
+            break;
+        }
+
+        case BlockCategories.COMPANY_THOUGHTS: {
+            AddComponent = () => <CompanyThoughtsAdd category={category}></CompanyThoughtsAdd>;
             break;
         }
 

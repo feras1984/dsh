@@ -19,6 +19,19 @@ import {setSpinner} from "@/Redux/Reducers/SpinnerSlice/SpinnerSlice";
 import ArticlesList from "@/Pages/Site/Blocks/Articles/ArticlesList";
 import IndustriesList from "@/Pages/Site/Blocks/Industries/IndustriesList";
 import NewsList from "@/Pages/Site/Blocks/News/NewsList";
+import AboutDSH from "@/Pages/Site/Pages/AboutDSH";
+import GeneralDirectorSpeech from "@/Pages/Site/Pages/GeneralDirectorSpeech";
+import Clients from "@/Pages/Site/Pages/Clients";
+import ExecutedProjects from "@/Pages/Site/Pages/Projects/ExecutedProjects";
+import Projects from "@/Pages/Site/Pages/Projects/Projects";
+import Project from "@/models/block/Project";
+import ProjectProps from "@/Interfaces/Site/ProjectProps";
+import ClientProps from "@/Interfaces/Site/ClientProps";
+import PrincipalActivities from "@/Pages/Site/Pages/PrincipalActivities";
+import QualityAssurance from "@/Pages/Site/Pages/QualityAssurance";
+import SafetyPlanning from "@/Pages/Site/Pages/SafetyPlanning";
+import CompanyThoughts from "@/Pages/Site/Pages/CompanyThoughts";
+import ContactUs from "@/Pages/Site/Pages/ContactUs";
 
 interface HubProps extends LinkListProps {
     blocks: BlockProps [];
@@ -39,14 +52,14 @@ const HubList: React.FC<HubProps> = ({
 
     const dispatch = useAppDispatch();
 
-    React.useEffect(() => {
-        // if (mainLinks.length > 0) {
-        //     dispatch(setSpinner(false));
-        // }
-        setTimeout(() => {
-            dispatch(setSpinner(false));
-        }, 3000)
-    }, [])
+    // React.useEffect(() => {
+    //     // if (mainLinks.length > 0) {
+    //     //     dispatch(setSpinner(false));
+    //     // }
+    //     setTimeout(() => {
+    //         dispatch(setSpinner(false));
+    //     }, 3000)
+    // }, [])
 
     switch (commonService.toTitleCase(category)) {
         case BlockCategories.ABOUT: {
@@ -54,8 +67,24 @@ const HubList: React.FC<HubProps> = ({
             break;
         }
 
+        case BlockCategories.ABOUT_DSH: {
+            AddComponent = () => <AboutDSH blocks={blocks}></AboutDSH>;
+            break;
+        }
+
+        case BlockCategories.GENERAL_DIRECTOR_SPEECH: {
+            AddComponent = () => <GeneralDirectorSpeech blocks={blocks}></GeneralDirectorSpeech>;
+            break;
+        }
+
         case BlockCategories.CLIENTS: {
-            AddComponent = () => <ClientsList clients={blocks}></ClientsList>;
+            // AddComponent = () => <ClientsList clients={blocks}></ClientsList>;
+            AddComponent = () => <Clients blocks={blocks}></Clients>
+            break;
+        }
+
+        case BlockCategories.PROJECTS: {
+            AddComponent = () => <Projects blocks={blocks as ProjectProps []}></Projects>;
             break;
         }
 
@@ -70,7 +99,7 @@ const HubList: React.FC<HubProps> = ({
         }
 
         case BlockCategories.CONTACT_US: {
-            AddComponent = () => <Contact contact={blocks}></Contact>
+            AddComponent = () => <ContactUs industries={blocks} contactLinks={contactLinks}></ContactUs>
             break;
         }
 
@@ -86,6 +115,26 @@ const HubList: React.FC<HubProps> = ({
 
         case BlockCategories.NEWS: {
             AddComponent = () => <NewsList services={blocks} category={category}></NewsList>
+            break;
+        }
+
+        case BlockCategories.PRINCIPAL_ACTIVITIES: {
+            AddComponent = () => <PrincipalActivities blocks={blocks}></PrincipalActivities>
+            break;
+        }
+
+        case BlockCategories.QUALITY_ASSURANCE: {
+            AddComponent = () => <QualityAssurance blocks={blocks}></QualityAssurance>
+            break;
+        }
+
+        case BlockCategories.SAFETY_PLANNING: {
+            AddComponent = () => <SafetyPlanning blocks={blocks}></SafetyPlanning>
+            break;
+        }
+
+        case BlockCategories.COMPANY_THOUGHTS: {
+            AddComponent = () => <CompanyThoughts blocks={blocks}></CompanyThoughts>
             break;
         }
     }

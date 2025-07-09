@@ -5,7 +5,7 @@ enum BlockCategories {
     CLIENTS = "Clients",
     GALLERY = "Gallery",
     ABOUT = "About Us",
-    ABOUT_SDH = "ABOUT SDH",
+    ABOUT_DSH = "About D S H",
     GENERAL_DIRECTOR_SPEECH = "General Director Speech",
     MANAGER_PROFILE = "Manager Profile",
     LEADERSHIP_PHILOSOPHY = "Leadership Philosophy",
@@ -17,6 +17,10 @@ enum BlockCategories {
     ARTICLES = "Articles",
     INDUSTRIES = "Industries",
     PROJECTS = "Projects",
+    PRINCIPAL_ACTIVITIES = "Principal Activities",
+    QUALITY_ASSURANCE = "Quality Assurance",
+    SAFETY_PLANNING = "Safety Planning",
+    COMPANY_THOUGHTS = "Company Thoughts",
 }
 
 export default BlockCategories;

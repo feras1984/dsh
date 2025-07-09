@@ -30,7 +30,7 @@ const ValidatedInput: React.FC<IValidatedInput<any>> = ({
                          field: { value, onChange, onBlur, ref },
                          fieldState: { error },
                      }) => (
-                <Box>
+                <Box className={'basis-[100%]'}>
                     <TextField
                         variant="filled"
                         color="secondary"

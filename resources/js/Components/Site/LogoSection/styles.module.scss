@@ -45,11 +45,13 @@
 }
 
 .logoImg {
+    //padding: 8px;
     @media screen and (max-width: $smScreen) {
         height: 60px;
     }
 
     @media screen and (min-width: $lgScreen) {
-        height: 90px;
+        height: 80px;
+        width: 85px;
     }
 }

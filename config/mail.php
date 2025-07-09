@@ -99,18 +99,18 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@asas-uae.com'),
-        'name' => env('MAIL_FROM_NAME', 'TERA MEDIA SOLUTION'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@dshintl.ae'),
+        'name' => env('MAIL_FROM_NAME', 'D S H International Construction'),
     ],
 
     'contact-receiver' => [
-        'address' => env('MAIL_CONTACT_RECEIVER_ADDRESS', 'info@asas-uae.com'),
-        'name' => env('MAIL_FROM_NAME', 'TERA MEDIA SOLUTION'),
+        'address' => env('MAIL_CONTACT_RECEIVER_ADDRESS', 'info@dshintl.ae'),
+        'name' => env('MAIL_FROM_NAME', 'D S H International Construction'),
     ],
 
     'from-no-reply' => [
-        'address' => env('MAIL_NO_REPLY_ADDRESS', 'info@asas-uae.com'),
-        'name' => env('MAIL_FROM_NAME', 'TERA MEDIA SOLUTION'),
+        'address' => env('MAIL_NO_REPLY_ADDRESS', 'info@dshintl.ae'),
+        'name' => env('MAIL_FROM_NAME', 'D S H International ConstructionN'),
     ],
 
     /*

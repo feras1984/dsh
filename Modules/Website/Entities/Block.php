@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\File\Entities\File;
@@ -59,6 +60,27 @@ class Block extends Model
     public function project(): HasOne
     {
         return $this->hasOne(Project::class, 'block_id', 'id');
+    }
+
+    public function executedProject(): HasOne
+    {
+        return $this
+            ->hasOne(Project::class, 'block_id', 'id')
+//            ->where('is_completed', true)
+            ;
+    }
+
+    public function underConstructionProject(): HasOne
+    {
+        return $this
+            ->hasOne(Project::class, 'block_id', 'id')
+            ->where('is_completed', false)
+            ;
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Block::class, 'parent_id', 'id');
     }
 
     protected static function newFactory()

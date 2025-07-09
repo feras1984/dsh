@@ -93,6 +93,9 @@ class NotificationController extends Controller
                 $request->subject ?? 'Normal Message',
                 $request->email,
                 $request->message,
+                $request->mobile ?? '',
+                $request->company ?? '',
+                $request->industry ?? '',
             ));
 
 //        Respond with another email from our mail host to the sender!

@@ -27,7 +27,7 @@ const SiteAppRoot = ({children, lang} : PropsWithChildren<{lang: string}>) => {
                     main: '#3d5afe',
                 },
                 secondary: {
-                    main: '#e02027',
+                    main: 'hsl(222.2, 47.4%, 11.2%)',
                 },
                 info: {
                     main: green[900],
@@ -55,7 +55,7 @@ const SiteAppRoot = ({children, lang} : PropsWithChildren<{lang: string}>) => {
                     main: '#2a3eb1',
                 },
                 secondary: {
-                    main: '#e02027',
+                    main: 'hsl(222.2, 47.4%, 11.2%)',
                 },
                 info: {
                     main: green[900],

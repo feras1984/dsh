@@ -46,7 +46,7 @@ class CommonService {
     };
 
     toTitleCase = (str: string) => {
-        return str.replace('-', ' ').replace(/(?:^|\s)\w/g, function(match) {
+        return str.replace(/-/g, ' ').replace(/(?:^|\s)\w/g, function(match) {
             return match.toUpperCase();
         });
     }

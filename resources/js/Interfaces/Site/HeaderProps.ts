@@ -3,6 +3,7 @@ import Language from "@/models/language/Language";
 
 interface HeaderProps {
     mainLinks: MenuLink[],
+    footerLinks?: MenuLink[],
     socialLinks: MenuLink[],
     contactLinks: MenuLink[],
     logo: {logo: string},

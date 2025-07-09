@@ -26,6 +26,10 @@ import LeadershipPhilosophyUpdate from "@/Pages/Admin/Website/Blocks/LeadershipP
 import VisionUpdate from "@/Pages/Admin/Website/Blocks/Vision/VisionUpdate";
 import CoreValuesUpdate from "@/Pages/Admin/Website/Blocks/CoreValues/CoreValuesUpdate";
 import Project from "@/models/block/Project";
+import PrincipalActivitiesUpdate from "@/Pages/Admin/Website/Blocks/PrincipalActivities/PrincipalActivitiesUpdate";
+import QualityAssuranceUpdate from "@/Pages/Admin/Website/Blocks/QualityAssurance/QualityAssuranceUpdate";
+import SafetyPlanningUpdate from "@/Pages/Admin/Website/Blocks/SafetyPlanning/SafetyPlanningUpdate";
+import CompanyThoughtsUpdate from "@/Pages/Admin/Website/Blocks/CompanyThoughts/CompanyThoughtsUpdate";
 
 const BlockUpdate = ({category, block}: PageProps<{category: string, block: Block}>) => {
     const commonService = Container.get(CommonService);
@@ -43,7 +47,7 @@ const BlockUpdate = ({category, block}: PageProps<{category: string, block: Bloc
             break;
         }
 
-        case BlockCategories.ABOUT_SDH: {
+        case BlockCategories.ABOUT_DSH: {
             UpdateComponent = () => <AboutUpdate block={block} category={category}></AboutUpdate>;
             break;
         }
@@ -110,6 +114,26 @@ const BlockUpdate = ({category, block}: PageProps<{category: string, block: Bloc
 
         case BlockCategories.PROJECTS: {
             UpdateComponent = () => <ProjectsUpdate block={block as Project} category={category}></ProjectsUpdate>
+            break;
+        }
+
+        case BlockCategories.PRINCIPAL_ACTIVITIES: {
+            UpdateComponent = () => <PrincipalActivitiesUpdate block={block as Project} category={category}></PrincipalActivitiesUpdate>
+            break;
+        }
+
+        case BlockCategories.QUALITY_ASSURANCE: {
+            UpdateComponent = () => <QualityAssuranceUpdate block={block as Project} category={category}></QualityAssuranceUpdate>
+            break;
+        }
+
+        case BlockCategories.SAFETY_PLANNING: {
+            UpdateComponent = () => <SafetyPlanningUpdate block={block as Project} category={category}></SafetyPlanningUpdate>
+            break;
+        }
+
+        case BlockCategories.COMPANY_THOUGHTS: {
+            UpdateComponent = () => <CompanyThoughtsUpdate block={block as Project} category={category}></CompanyThoughtsUpdate>
             break;
         }
 

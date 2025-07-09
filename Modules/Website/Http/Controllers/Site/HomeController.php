@@ -15,6 +15,9 @@ use Modules\Website\Enums\MenuCategoryEnum;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Modules\Website\Facades\Blocks\BlockService;
+use Modules\Website\Facades\Blocks\ClientService;
+use Modules\Website\Facades\Blocks\IndustryService;
+use Modules\Website\Facades\Blocks\ProjectService;
 use Modules\Website\Facades\Menus\MenuService;
 
 class HomeController extends Controller
@@ -28,14 +31,15 @@ class HomeController extends Controller
         $logo = 'logo.png';
         $languages = LanguageService::getActiveLanguages();
         $homeSlider = BlockService::getActiveBlocks(Str::slug(BlockCategoryEnum::MAIN_SECTION->value, '-'));
-        $services = BlockService::getActiveBlocks(BlockCategoryEnum::SERVICES);
-        $clients = BlockService::getActiveBlocks(BlockCategoryEnum::CLIENTS);
-        $galleries = BlockService::getActiveBlocks(BlockCategoryEnum::GALLERY);
+//        $services = BlockService::getActiveBlocks(BlockCategoryEnum::SERVICES);
+        $clients = ClientService::getActiveBlocks(Str::slug(BlockCategoryEnum::CLIENTS->value, ''));
+        $projects = ProjectService::getActiveBlocks(Str::slug(BlockCategoryEnum::PROJECTS->value, '-'));
+//        $galleries = BlockService::getActiveBlocks(BlockCategoryEnum::GALLERY);
         $missions = BlockService::getActiveBlocks(Str::slug(BlockCategoryEnum::MISSION->value));
-        $about = BlockService::getActiveBlocks(Str::slug(BlockCategoryEnum::ABOUT->value));
+        $about = BlockService::getActiveBlocks(Str::slug(BlockCategoryEnum::ABOUT_DSH->value));
         $news = BlockService::getActiveBlocks(Str::slug(BlockCategoryEnum::NEWS->value));
         $articles = BlockService::getActiveBlocks(Str::slug(BlockCategoryEnum::ARTICLES->value));
-        $industries = BlockService::getActiveBlocks(Str::slug(BlockCategoryEnum::INDUSTRIES->value));
+        $industries = IndustryService::getActiveBlocks(Str::slug(BlockCategoryEnum::INDUSTRIES->value));
         return Inertia::render('Site/Home', [
             'mainLinks' => $mainLinks,
             'socialLinks' => $socialLinks,
@@ -44,14 +48,15 @@ class HomeController extends Controller
             'logo' => $logo,
             'languages' => $languages,
             'mainSliders' => $homeSlider,
-            'services' => $services,
+//            'services' => $services,
             'clients' => $clients,
-            'galleries' => $galleries,
+//            'galleries' => $galleries,
             'missions' => $missions,
             'about' => $about,
             'news' => $news,
             'articles' => $articles,
             'industries' => $industries,
+            'projects' => $projects,
         ]);
     }
 }
