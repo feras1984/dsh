@@ -1,0 +1,1 @@
+import{I as r,j as t}from"./app-02c3e451.js";import{r as a}from"./createSvgIcon-389b3db5.js";var e={},u=r;Object.defineProperty(e,"__esModule",{value:!0});var i=e.default=void 0,o=u(a()),s=t,f=(0,o.default)((0,s.jsx)("circle",{cx:"12",cy:"12",r:"10"}),"Brightness1");i=e.default=f;export{i as d};

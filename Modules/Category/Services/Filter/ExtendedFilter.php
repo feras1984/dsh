@@ -1,0 +1,14 @@
+<?php
+
+namespace Modules\Category\Services\Filter;
+
+use Illuminate\Database\Eloquent\Builder;
+
+class ExtendedFilter extends Filter
+{
+
+    protected function applyFilter(Builder $builder, ...$args)
+    {
+        return $builder->where('is_extended', 1);
+    }
+}
