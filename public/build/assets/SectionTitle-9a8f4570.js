@@ -1,1 +1,0 @@
-import{j as r}from"./app-02c3e451.js";import{B as e}from"./Box-0664301f.js";import{T as s}from"./Typography-f39d2c2e.js";const a=({title:o,...t})=>r.jsx(e,{className:"p-[16px]",children:r.jsx(s,{...t,variant:"h3",align:"center",sx:{fontWeight:"bold",color:"#E02027",fontSize:{xs:"1.5rem",md:"3rem"}},children:o})});export{a as S};

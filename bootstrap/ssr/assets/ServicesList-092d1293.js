@@ -3,7 +3,7 @@ import { Box, Typography, Grid } from "@mui/material";
 import ServicesDetails from "./ServicesDetails-9823cc38.js";
 import { usePage, Link } from "@inertiajs/react";
 import "react";
-import "./styles.module-2038aa74.js";
+import "./styles.module-18fc343b.js";
 import "@gsap/react";
 import "@mui/material/styles/index.js";
 const ServicesList = ({ services, category }) => {

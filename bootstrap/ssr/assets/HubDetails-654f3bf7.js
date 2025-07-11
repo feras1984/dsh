@@ -98,10 +98,10 @@ import "swiper/react";
 import "swiper/modules";
 /* empty css                     */import "swiper";
 import "@gsap/react";
-import "./styles.module-2038aa74.js";
+import "./styles.module-18fc343b.js";
 import "./styles.module-2d4d1c93.js";
 import "./styles.module-498bd7ba.js";
-import "./styles.module-18fc343b.js";
+import "./styles.module-2038aa74.js";
 const HubList = ({
   mainLinks,
   socialLinks,

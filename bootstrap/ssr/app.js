@@ -1197,7 +1197,7 @@ const translation$1 = {
   "team-members": "Team Members",
   "happy-clients": "Happy Clients",
   "leadership-philosophy": "Leadership Philosophy",
-  "executed-projects": "Executed Projects",
+  "executed-projects": "Executed Projects 1",
   "executed-projects-hero": "Explore our portfolio of successfully completed projects showcasing our expertise across various sectors and building types.",
   "projects-statistics": "Projects Statistics",
   "projects-track-record": "Our track record speaks for itself",

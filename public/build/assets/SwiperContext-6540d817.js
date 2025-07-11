@@ -1,1 +1,0 @@
-import{R as e,j as n}from"./app-02c3e451.js";const s={categories:[],handleProduct:t=>{}},o=e.createContext(s),c=({value:t,children:r})=>n.jsx(o.Provider,{value:t,children:r}),x=()=>{const t=e.useContext(o);if(t===void 0)throw new Error("The context must be used inside the ");return t};export{c as SwiperProvider,x as useSwiperContext};
