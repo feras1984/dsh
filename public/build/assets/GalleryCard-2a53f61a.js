@@ -1,0 +1,1 @@
+import{j as o}from"./app-038fa1f3.js";import{B as l}from"./Box-534654de.js";import"./generateUtilityClasses-ebbba4c2.js";const s=({gallery:r})=>(console.log("gallery: ",r),o.jsx(l,{children:"Gallery Card"}));export{s as default};

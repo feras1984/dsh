@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import "react";
 import "@gsap/react";
 import "@mui/material/styles/index.js";
-import "./styles.module-18fc343b.js";
+import "./styles.module-2038aa74.js";
 const NewsList = ({ services, category }) => {
   const lang = usePage().props.lang;
   const { t } = useTranslation();
