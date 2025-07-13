@@ -1,0 +1,1 @@
+import{u as n,j as o,b as r,d as u,T as m}from"./app-3222beb4.js";import{G as f}from"./generateUtilityClasses-681c6b88.js";function p({styles:e,themeId:s,defaultTheme:a={}}){const t=n(a),l=typeof e=="function"?e(s&&t[s]||t):e;return o.jsx(f,{styles:l})}function T(e){return o.jsx(p,r({},e,{defaultTheme:u,themeId:m}))}export{T as G};

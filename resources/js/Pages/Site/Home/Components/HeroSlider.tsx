@@ -10,7 +10,7 @@ const HeroSlider: React.FC<{slides: BlockProps []}> = ({slides}) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
     const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const fileURL = `${import.meta.env.VITE_APP_URL}/file/blocks`;
+    const fileURL = `/file/blocks`;
     const {t} = useTranslation();
     const {lang} = usePage().props;
 

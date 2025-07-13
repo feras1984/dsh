@@ -1,0 +1,1 @@
+import{r as t}from"./app-3222beb4.js";const f=typeof window<"u"?t.useLayoutEffect:t.useEffect,s=f;function o(e,n){typeof e=="function"?e(n):e&&(e.current=n)}function r(...e){return t.useMemo(()=>e.every(n=>n==null)?null:n=>{e.forEach(u=>{o(u,n)})},e)}export{s as a,o as s,r as u};
