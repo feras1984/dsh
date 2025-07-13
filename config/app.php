@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://teramediasolution.com/'),
+    'url' => env('APP_URL', 'https://dshintl.ferasmasoud.com/'),
 
     'asset_url' => env('ASSET_URL'),
 

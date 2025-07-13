@@ -1,0 +1,1 @@
+import{j as t}from"./app-3222beb4.js";import{s as e}from"./styles.module-9093707d.js";import{B as s}from"./Box-baa5e9d6.js";import"./generateUtilityClasses-681c6b88.js";const x=({product:r})=>t.jsx(s,{children:t.jsx("p",{className:`${e.productName} product-title sm:text-xl md:text-xl text-start font-bold uppercase`,children:r.name})});export{x as default};
