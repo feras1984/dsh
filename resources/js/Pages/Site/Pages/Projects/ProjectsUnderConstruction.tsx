@@ -48,7 +48,7 @@ const ProjectsUnderConstruction: React.FC<{
                         </div>
                     </div>
 
-                    <FilteredProjects industries={industries} getIndustry={getIndustry} />
+                    {/*<FilteredProjects industries={industries} getIndustry={getIndustry} />*/}
 
                     {/* Featured Projects */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -61,9 +61,9 @@ const ProjectsUnderConstruction: React.FC<{
                                         className="w-full h-64 object-cover"
                                     />
                                     <div className="absolute top-4 left-4">
-                    <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                      {project.industry}
-                    </span>
+                    {/*<span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">*/}
+                    {/*  {project.industry}*/}
+                    {/*</span>*/}
                                     </div>
                                     <div className="absolute top-4 right-4">
                     <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">

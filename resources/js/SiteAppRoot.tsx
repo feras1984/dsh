@@ -3,11 +3,16 @@ import {useAppSelector} from "@/Redux/Store/hook";
 import {dark} from "@mui/material/styles/createPalette";
 import {createTheme, useTheme, ThemeProvider, Direction, CssBaseline} from "@mui/material";
 import {indigo, pink, purple, lime, green, lightGreen, red, teal} from "@mui/material/colors";
-import netflix from "../fonts/NetflixSans-Regular.woff2";
-import netflixBold from "../fonts/NetflixSans-Bold.woff2";
-import netflixLight from "../fonts/NetflixSans-Light.woff2";
-import netflixMedium from "../fonts/NetflixSans-Medium.woff2";
-import trebuchet from "../fonts/TrebuchetMS.ttf";
+import LatoBlack from "../fonts/Lato-Black.ttf";
+import LatoBlackItalic from "../fonts/Lato-BlackItalic.ttf";
+import LatoBold from "../fonts/Lato-Bold.ttf";
+import LatoBoldItalic from "../fonts/Lato-BoldItalic.ttf";
+import LatoItalic from "../fonts/Lato-Italic.ttf";
+import LatoLight from "../fonts/Lato-Light.ttf";
+import LatoLightItalic from "../fonts/Lato-LightItalic.ttf";
+import LatoRegular from "../fonts/Lato-Regular.ttf";
+import LatoThin from "../fonts/Lato-Thin.ttf";
+import LatoThinItalic from "../fonts/Lato-ThinItalic.ttf";
 
 const SiteAppRoot = ({children, lang} : PropsWithChildren<{lang: string}>) => {
     const themeMode = useAppSelector(state => state.siteTheme.mode);
@@ -81,13 +86,8 @@ const SiteAppRoot = ({children, lang} : PropsWithChildren<{lang: string}>) => {
 
         typography: {
             fontFamily: [
-                'trebuchet',
-                'Sans',
-                '"Helvetica Neue"',
-                '"Segoe UI"',
-                'Roboto',
-                'Ubuntu',
-                'sans-serif'
+                'lato',
+                'sans-serif',
             ].join(','),
         },
 
@@ -95,12 +95,22 @@ const SiteAppRoot = ({children, lang} : PropsWithChildren<{lang: string}>) => {
             MuiCssBaseline: {
                 styleOverrides: `
         @font-face {
-          font-family: 'trebuchet';
-          font-style: regular;
+          font-family: 'Lato';
+          font-style: normal;
           font-display: swap;
-          font-weight: 500;
+          font-weight: 400;
 
-          src: url(${trebuchet}) format('ttf');
+          src: url(${LatoRegular}) format('ttf');
+          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+        }
+
+        @font-face {
+          font-family: 'Lato';
+          font-style: normal;
+          font-display: swap;
+          font-weight: 700;
+
+          src: url(${LatoBold}) format('ttf');
           unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
         }
       `,

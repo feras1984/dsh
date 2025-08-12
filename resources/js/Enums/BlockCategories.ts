@@ -21,6 +21,7 @@ enum BlockCategories {
     QUALITY_ASSURANCE = "Quality Assurance",
     SAFETY_PLANNING = "Safety Planning",
     COMPANY_THOUGHTS = "Company Thoughts",
+    ORGANIZATIONAL_SECTION = "Organizational Structure",
 }
 
 export default BlockCategories;

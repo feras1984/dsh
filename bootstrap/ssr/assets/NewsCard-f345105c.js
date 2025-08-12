@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Box, Typography } from "@mui/material";
-import { s as styles } from "./styles.module-2038aa74.js";
+import { s as styles } from "./styles.module-18fc343b.js";
 import { usePage } from "@inertiajs/react";
 const NewsCard = ({ service }) => {
   const lang = usePage().props.lang;

@@ -1,5 +1,5 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import { s as styles } from "./styles.module-18fc343b.js";
+import { s as styles } from "./styles.module-2038aa74.js";
 import { Box, Typography } from "@mui/material";
 const ServiceCard = ({ service }) => {
   return /* @__PURE__ */ jsx(Box, { children: /* @__PURE__ */ jsxs(Box, { className: styles.serviceCard, children: [

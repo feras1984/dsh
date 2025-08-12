@@ -30,6 +30,8 @@ import PrincipalActivitiesUpdate from "@/Pages/Admin/Website/Blocks/PrincipalAct
 import QualityAssuranceUpdate from "@/Pages/Admin/Website/Blocks/QualityAssurance/QualityAssuranceUpdate";
 import SafetyPlanningUpdate from "@/Pages/Admin/Website/Blocks/SafetyPlanning/SafetyPlanningUpdate";
 import CompanyThoughtsUpdate from "@/Pages/Admin/Website/Blocks/CompanyThoughts/CompanyThoughtsUpdate";
+import OrganizationalSectionUpdate
+    from "@/Pages/Admin/Website/Blocks/OrgainizationalSection/OrganizationalSectionUpdate";
 
 const BlockUpdate = ({category, block}: PageProps<{category: string, block: Block}>) => {
     const commonService = Container.get(CommonService);
@@ -134,6 +136,11 @@ const BlockUpdate = ({category, block}: PageProps<{category: string, block: Bloc
 
         case BlockCategories.COMPANY_THOUGHTS: {
             UpdateComponent = () => <CompanyThoughtsUpdate block={block as Project} category={category}></CompanyThoughtsUpdate>
+            break;
+        }
+
+        case BlockCategories.ORGANIZATIONAL_SECTION: {
+            UpdateComponent = () => <OrganizationalSectionUpdate block={block as Project} category={category}></OrganizationalSectionUpdate>
             break;
         }
 

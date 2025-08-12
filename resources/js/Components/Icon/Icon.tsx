@@ -104,6 +104,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {Link} from "@inertiajs/react";
 import {IconBaseProps} from "react-icons/lib/cjs/iconBase";
 import CloseIcon from "@mui/icons-material/Close";
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 const Icon: React.FC<IconProps> = ({name, color = '', size = 36, sizeSmall = 24}) => {
     // const size = 36;
     // const sizeSmall = 24;
@@ -456,6 +457,11 @@ const Icon: React.FC<IconProps> = ({name, color = '', size = 36, sizeSmall = 24}
         case 'shopping-cart' :
             return (
                 <ShoppingCartIcon></ShoppingCartIcon>
+            );
+
+        case 'organization-structure' :
+            return (
+                <AccountTreeIcon></AccountTreeIcon>
             );
 
         default:

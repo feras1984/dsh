@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import MissionList from "./MissionList-05983eef.js";
 import AboutPage from "./AboutPage-aa2d8e6a.js";
 import "./MissionDetails-769e6610.js";
-import "./styles.module-18fc343b.js";
+import "./styles.module-2038aa74.js";
 const AboutUsList = ({ about }) => {
   const missions = about.filter((b, index) => index !== 0);
   return /* @__PURE__ */ jsxs(Box, { children: [

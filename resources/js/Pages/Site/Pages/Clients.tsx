@@ -56,36 +56,36 @@ const Clients: React.FC<{blocks: BlockProps[]}> = ({blocks}) => {
             {/*    </div>*/}
             {/*</section>*/}
 
-            {/* Industries We Serve */}
-            <section className="py-20 bg-secondary/50">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold mb-4 text-foreground">{t('industries-we-served')}</h2>
-                        <p className="text-xl text-muted-foreground">
-                            {t('industries-hero')}
-                        </p>
-                    </div>
+            {/*/!* Industries We Serve *!/*/}
+            {/*<section className="py-20 bg-secondary/50">*/}
+            {/*    <div className="container mx-auto px-4">*/}
+            {/*        <div className="text-center mb-12">*/}
+            {/*            <h2 className="text-4xl font-bold mb-4 text-foreground">{t('industries-we-served')}</h2>*/}
+            {/*            <p className="text-xl text-muted-foreground">*/}
+            {/*                {t('industries-hero')}*/}
+            {/*            </p>*/}
+            {/*        </div>*/}
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {industries.map((industry, index) => (
-                            <div key={index} className="bg-card border border-border rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 group">
-                                <div
-                                    className="flex justify-center mb-4 text-primary group-hover:scale-110 transition-transform duration-300">
-                                    <object data={`/file/blocks/${industry.images[0].url}` || ''} type="image/svg+xml" width="64px"
-                                            height="64px">
-                                        {/* Fallback if object fails */}
-                                        <img src={`/file/blocks/${industry.images[0].url}` || ''} width={'32px'} height={'32px'} alt="svg fallback"/>
-                                    </object>
-                                </div>
-                                <h3 className="text-xl font-semibold mb-2 text-foreground">{industry.title}</h3>
-                                <p className="text-muted-foreground">
-                                    {industry.executedProjects} Projects Completed
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/*        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">*/}
+            {/*            {industries.map((industry, index) => (*/}
+            {/*                <div key={index} className="bg-card border border-border rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 group">*/}
+            {/*                    <div*/}
+            {/*                        className="flex justify-center mb-4 text-primary group-hover:scale-110 transition-transform duration-300">*/}
+            {/*                        <object data={`/file/blocks/${industry.images[0].url}` || ''} type="image/svg+xml" width="64px"*/}
+            {/*                                height="64px">*/}
+            {/*                            /!* Fallback if object fails *!/*/}
+            {/*                            <img src={`/file/blocks/${industry.images[0].url}` || ''} width={'32px'} height={'32px'} alt="svg fallback"/>*/}
+            {/*                        </object>*/}
+            {/*                    </div>*/}
+            {/*                    <h3 className="text-xl font-semibold mb-2 text-foreground">{industry.title}</h3>*/}
+            {/*                    <p className="text-muted-foreground">*/}
+            {/*                        {industry.executedProjects} Projects Completed*/}
+            {/*                    </p>*/}
+            {/*                </div>*/}
+            {/*            ))}*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</section>*/}
 
             {/* Featured Clients */}
             <section className="py-20">

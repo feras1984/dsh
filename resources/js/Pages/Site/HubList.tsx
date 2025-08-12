@@ -32,6 +32,7 @@ import QualityAssurance from "@/Pages/Site/Pages/QualityAssurance";
 import SafetyPlanning from "@/Pages/Site/Pages/SafetyPlanning";
 import CompanyThoughts from "@/Pages/Site/Pages/CompanyThoughts";
 import ContactUs from "@/Pages/Site/Pages/ContactUs";
+import OrganizationalSection from "@/Pages/Site/Pages/OrganizationalSection";
 
 interface HubProps extends LinkListProps {
     blocks: BlockProps [];
@@ -80,6 +81,12 @@ const HubList: React.FC<HubProps> = ({
         case BlockCategories.CLIENTS: {
             // AddComponent = () => <ClientsList clients={blocks}></ClientsList>;
             AddComponent = () => <Clients blocks={blocks}></Clients>
+            break;
+        }
+
+        case BlockCategories.ORGANIZATIONAL_SECTION: {
+            // AddComponent = () => <ClientsList clients={blocks}></ClientsList>;
+            AddComponent = () => <OrganizationalSection blocks={blocks}></OrganizationalSection>
             break;
         }
 

@@ -3,7 +3,7 @@ import React from "react";
 import { useGSAP } from "@gsap/react";
 import { styled } from "@mui/material/styles/index.js";
 import { Box, Typography } from "@mui/material";
-import { s as styles } from "./styles.module-2038aa74.js";
+import { s as styles } from "./styles.module-18fc343b.js";
 const NewsDetails = ({ service }) => {
   const containerRef = React.useRef(null);
   React.useRef(null);
