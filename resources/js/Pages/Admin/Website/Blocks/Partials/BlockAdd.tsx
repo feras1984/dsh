@@ -29,6 +29,7 @@ import PrincipalActivitiesAdd from "@/Pages/Admin/Website/Blocks/PrincipalActivi
 import QualityAssuranceAdd from "@/Pages/Admin/Website/Blocks/QualityAssurance/QualityAssuranceAdd";
 import SafetyPlanningAdd from "@/Pages/Admin/Website/Blocks/SafetyPlanning/SafetyPlanningAdd";
 import CompanyThoughtsAdd from "@/Pages/Admin/Website/Blocks/CompanyThoughts/CompanyThoughtsAdd";
+import OrganizationalSectionAdd from "@/Pages/Admin/Website/Blocks/OrgainizationalSection/OrganizationalSectionAdd";
 
 const BlockAdd = ({category}: PageProps<{category: string}>) => {
     const commonService = Container.get(CommonService);
@@ -135,6 +136,11 @@ const BlockAdd = ({category}: PageProps<{category: string}>) => {
 
         case BlockCategories.PROJECTS: {
             AddComponent = () => <ProjectsAdd category={category}></ProjectsAdd>
+            break;
+        }
+
+        case BlockCategories.ORGANIZATIONAL_SECTION: {
+            AddComponent = () => <OrganizationalSectionAdd category={category}></OrganizationalSectionAdd>
             break;
         }
 

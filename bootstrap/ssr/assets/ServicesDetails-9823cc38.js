@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { s as styles } from "./styles.module-18fc343b.js";
+import { s as styles } from "./styles.module-2038aa74.js";
 import { useGSAP } from "@gsap/react";
 import { styled } from "@mui/material/styles/index.js";
 const ServicesDetails = ({ service }) => {

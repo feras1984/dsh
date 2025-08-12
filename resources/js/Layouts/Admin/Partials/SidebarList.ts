@@ -129,6 +129,13 @@ const SidebarList: CustomTab [] = [
     },
 
     {
+        name: BlockCategories.ORGANIZATIONAL_SECTION,
+        icon: 'organization-structure',
+        link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.ORGANIZATIONAL_SECTION),
+        children: [],
+    },
+
+    {
         name: BlockCategories.PROJECTS,
         icon: 'mission',
         link: '/admin/website/get-block/' + commonService.toSnakeCase(BlockCategories.PROJECTS),

@@ -31,7 +31,7 @@ const ExecutedProjects: React.FC<{
                 </div>
             </section>
 
-            <FilteredProjects industries={industries} getIndustry={getIndustry} />
+            {/*<FilteredProjects industries={industries} getIndustry={getIndustry} />*/}
 
             {/* Projects Grid */}
             <section className="py-20">
@@ -46,9 +46,9 @@ const ExecutedProjects: React.FC<{
                                         className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                                     />
                                     <div className="absolute top-4 left-4">
-                    <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                      {project.industry}
-                    </span>
+                    {/*<span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">*/}
+                    {/*  {project.industry}*/}
+                    {/*</span>*/}
                                     </div>
                                 </div>
 

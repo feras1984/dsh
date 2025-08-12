@@ -26,5 +26,6 @@ enum BlockCategoryEnum: string
     case MANAGER_PROFILE = "Manager Profile";
     case LEADERSHIP_PHILOSOPHY = "Leadership Philosophy";
     case CORE_VALUES = "Core Values";
+    case ORGANIZATIONAL_SECTION = "Organizational Section";
 
 }

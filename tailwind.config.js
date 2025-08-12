@@ -142,6 +142,9 @@ export default {
                 'fade-in-left': 'fade-in-left 0.6s ease-out',
                 'fade-in-right': 'fade-in-right 0.6s ease-out',
                 'scale-in': 'scale-in 0.5s ease-out'
+            },
+            fontFamily: {
+                lato: ['lato', 'sans-serif'],
             }
         }
     },

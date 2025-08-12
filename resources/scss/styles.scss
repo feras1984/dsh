@@ -5,7 +5,6 @@
 @import "variables";
 @import "site";
 
-
 :root {
     --clr-bg-dark: #1f2937; /* gray-800 */
     --clr-bg-light: #d4d4d4; /* zinc-50 */
@@ -39,10 +38,43 @@
     --clr-site-bg-content-light: #fff;
 }
 
+@font-face {
+    font-family: 'lato';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+
+    src: url('../fonts/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'lato';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+
+    src: url('../fonts/Lato-Bold.ttf') format('truetype');
+}
+
+//html, :host {
+//    font-family: 'lato', sans-serif;
+//}
+
+.font-sans {
+    font-family: 'lato', sans-serif;
+    letter-spacing: 1px;
+}
+
 body {
     //background-color: $bgColor;
     line-height: 2;
 }
+
+
+
+//.font-sans{
+//    font-family: 'lato', sans-serif;
+//}
 
 .dark {
 

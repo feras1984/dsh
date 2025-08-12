@@ -1,6 +1,6 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Box, Typography } from "@mui/material";
-import { s as styles } from "./styles.module-18fc343b.js";
+import { s as styles } from "./styles.module-2038aa74.js";
 const AboutPage = ({ about }) => {
   return /* @__PURE__ */ jsx(Box, { children: /* @__PURE__ */ jsxs(Box, { className: styles.serviceCard, children: [
     /* @__PURE__ */ jsxs(Box, { className: styles.boxContainer, children: [
