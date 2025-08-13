@@ -47,7 +47,7 @@ const OrganizationalSectionUpdate: React.FC<{category: string, block: Block}> = 
         // Record key is "ar" or "en" of length 2:
         translations: z.record(z.string().length(2),z.object({
             name: z.string().min(3, {message: 'Title should be at least 3 characters!'}),
-            brief: z.string().min(10),
+            // brief: z.string().min(10),
             // description: z.string().max(100, {message: " Description shouldn't exceed 100 characters!"})
             // description: z.string().min(10),
         })),
